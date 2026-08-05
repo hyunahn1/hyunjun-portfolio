@@ -149,7 +149,7 @@ export const projects: Project[] = [
       {
         label: "My Role",
         body: [
-          "독일 Toll Collect SID 통행 데이터 수집 및 전처리",
+          "약 16만 건 규모의 독일 Toll Collect SID 통행 데이터 수집 및 전처리",
           "휴게소별 시공간 수요 패턴 분석",
           "시간·위치·경로 맥락·수요를 다루는 피처 파이프라인 구축",
           "LightGBM 베이스라인 학습 및 딥러닝 모델과 성능 비교",
@@ -268,38 +268,112 @@ export const projects: Project[] = [
     media: [],
     repo: null,
   },
+];
+
+/* --- 42 과정에서 수행한 과제 ------------------------------------------- */
+
+export type Course = {
+  name: string;
+  ko: string;
+  desc: string;
+  learned: string[];
+};
+
+export const curriculumIntro =
+  "42는 강의 없이 과제와 동료 평가로 진행됩니다. 정답이 주어지지 않기 때문에 매번 문서와 시스템 콜 매뉴얼을 직접 읽고, 동작을 확인하며 구현했습니다. 아래는 그 과정에서 직접 만들고 평가받은 과제들입니다.";
+
+export const curriculum: { group: string; items: Course[] }[] = [
   {
-    code: "PRJ-05",
-    org: "42 Gyeongsan · Common Core",
-    title: "42 시스템 프로그래밍",
-    titleEn: "System Programming Projects at 42",
-    overview:
-      "표준 라이브러리에 의존하지 않고 운영체제 기능을 직접 다루는 C/C++ 프로젝트들입니다. 아래 역량은 개별 과제를 통해 구현하고 동료 평가로 검증했습니다.",
-    spec: [
+    group: "C · 시스템 프로그래밍",
+    items: [
       {
-        label: "Selected",
-        body: [
-          "Minishell — 파서, 프로세스 생성, 파이프, 리다이렉션",
-          "Philosophers — 멀티스레딩, 뮤텍스, 데드락 회피",
-          "Webserv — HTTP 서버, 소켓, 논블로킹 I/O",
-          "CPP Modules — C++ 객체지향 및 템플릿",
-        ],
+        name: "ft_printf",
+        ko: "표준 출력 함수 재구현",
+        desc: "C 표준 printf를 가변 인자와 포맷 파서로 직접 구현하고, 이후 과제에서 재사용할 정적 라이브러리로 묶었습니다.",
+        learned: ["가변 인자", "포맷 파싱", "정적 라이브러리", "Makefile"],
       },
       {
-        label: "Focus",
-        body: [
-          "프로세스 생성 및 제어, 파일 디스크립터",
-          "멀티스레딩과 동기화",
-          "수동 메모리 관리 및 누수 추적",
-          "소켓 프로그래밍과 Linux 시스템 콜",
-          "gdb·valgrind 기반 디버깅",
-          "Makefile / CMake 빌드 구성",
-        ],
+        name: "Minishell",
+        ko: "셸 구현",
+        desc: "bash의 동작을 축소해 구현했습니다. 명령어 파싱부터 fork/exec, 파이프, 리다이렉션, 시그널 처리까지 셸의 실행 경로를 직접 만들었습니다.",
+        learned: ["fork / exec", "pipe", "redirection", "signal", "파서 설계"],
+      },
+      {
+        name: "Philosophers",
+        ko: "동시성 문제",
+        desc: "식사하는 철학자 문제를 스레드와 뮤텍스로 구현하며, 데드락과 기아 상태 없이 자원을 나눠 쓰는 방법을 다뤘습니다.",
+        learned: ["pthread", "mutex", "deadlock", "race condition"],
       },
     ],
-    stack: ["C", "C++", "Linux", "pthread", "Socket", "Makefile", "gdb", "valgrind"],
-    media: [],
-    repo: "https://github.com/hyunahn1",
+  },
+  {
+    group: "네트워크 · 서버",
+    items: [
+      {
+        name: "NetPractice",
+        ko: "컴퓨터 네트워크",
+        desc: "잘못 구성된 네트워크를 직접 고치는 과제로, IP 주소 체계와 서브넷 마스크, 라우팅 테이블이 어떻게 맞물리는지 익혔습니다.",
+        learned: ["TCP / IP", "서브넷", "라우팅"],
+      },
+      {
+        name: "ft_IRC",
+        ko: "IRC 서버",
+        desc: "RFC 기준의 IRC 서버를 C++로 구현했습니다. 하나의 이벤트 루프로 다수 클라이언트를 논블로킹 처리하고, 채널·권한·명령어 프로토콜을 파싱했습니다.",
+        learned: ["논블로킹 I/O", "poll", "프로토콜 파싱", "다중 클라이언트"],
+      },
+      {
+        name: "Webserv",
+        ko: "HTTP 서버",
+        desc: "HTTP/1.1 서버를 직접 구현했습니다. 설정 파일 파싱, 라우팅, 정적 파일 제공, CGI 실행까지 요청 처리 경로 전체를 다뤘습니다.",
+        learned: ["HTTP/1.1", "socket", "CGI", "설정 파서"],
+      },
+    ],
+  },
+  {
+    group: "리눅스 · 인프라",
+    items: [
+      {
+        name: "Born2beRoot",
+        ko: "리눅스 서버 구축",
+        desc: "가상머신 위에 Debian 서버를 직접 구축했습니다. LVM 암호화 파티션, SSH·방화벽·sudo 정책, 비밀번호 규칙, 모니터링 스크립트를 설정하며 리눅스 시스템 관리의 기본을 익혔습니다.",
+        learned: ["Linux", "LVM", "SSH", "UFW", "cron"],
+      },
+      {
+        name: "Inception",
+        ko: "컨테이너 인프라",
+        desc: "NGINX·WordPress·MariaDB를 각각의 컨테이너로 분리하고, 이미지를 베이스부터 직접 작성해 Docker Compose로 묶었습니다. (PRJ-03)",
+        learned: ["Docker", "Compose", "NGINX", "TLS", "Docker secrets"],
+      },
+      {
+        name: "Inception-of-Things",
+        ko: "쿠버네티스 GitOps",
+        desc: "Vagrant로 K3s 클러스터를 프로비저닝하고, Argo CD로 Git 저장소와 클러스터 상태를 동기화하는 배포 파이프라인을 구성했습니다. (PRJ-04)",
+        learned: ["K3s / K3d", "Argo CD", "GitOps", "Ingress"],
+      },
+    ],
+  },
+  {
+    group: "C++ · 렌더링 · 함수형",
+    items: [
+      {
+        name: "CPP Modules",
+        ko: "C++ 객체지향",
+        desc: "C++의 기능을 단계별로 구현했습니다. 상속과 다형성, 연산자 오버로딩, 템플릿, 캐스팅, STL 컨테이너를 직접 다뤘습니다.",
+        learned: ["OOP", "템플릿", "STL", "캐스팅", "예외 처리"],
+      },
+      {
+        name: "cub3D",
+        ko: "레이캐스팅 렌더러",
+        desc: "레이캐스팅으로 3D 시점을 그리는 미로 게임을 만들었습니다. 벡터 연산, 렌더링 루프, 텍스처 매핑과 이벤트 처리를 직접 구현했습니다.",
+        learned: ["레이캐스팅", "MiniLibX", "벡터 연산", "이벤트 루프"],
+      },
+      {
+        name: "OCaml",
+        ko: "함수형 프로그래밍",
+        desc: "불변성, 패턴 매칭, 고차 함수, 타입 시스템을 다루며 명령형과는 다른 방식으로 문제를 나누는 법을 익혔습니다.",
+        learned: ["함수형", "패턴 매칭", "타입 추론", "불변성"],
+      },
+    ],
   },
 ];
 
@@ -440,17 +514,19 @@ export const education: Education[] = [
 ];
 
 export const about = [
-  "역사학을 전공하며 자료를 분석하고 맥락을 구조화하는 훈련을 받았습니다. 이후 아이디어를 실제로 동작하는 시스템으로 구현하고 싶어 소프트웨어 개발로 진로를 전환했습니다.",
-  "42 교육과정에서 C/C++와 시스템 프로그래밍을 학습했고, 현재 독일에서 자동차 임베디드 및 AI 프로젝트를 수행하고 있습니다. 화면 위에서만 끝나지 않고 하드웨어와 실제 데이터에 맞닿는 소프트웨어에 관심이 있습니다.",
-  "문제를 먼저 좁게 정의하고, 가장 단순한 방법으로 동작을 확인한 뒤 개선하는 방식으로 일합니다. 모르는 것은 추측하지 않고 로그와 측정으로 확인하려고 합니다.",
+  "저는 C/C++와 Linux를 기반으로 운영체제, 임베디드 시스템, 통신 및 서비스 통합 경험을 쌓아온 개발자입니다. 역사학을 전공한 뒤 소프트웨어 엔지니어링으로 진로를 전환했고, 42 Gyeongsan과 42 Wolfsburg에서 정답이 정해져 있지 않은 프로젝트를 직접 분석하고 구현하며 개발 역량을 길렀습니다.",
+  "42 교육과정에서는 C/C++를 활용해 프로세스, 스레드, 메모리 관리, 동기화, 소켓 통신 등 시스템 프로그래밍의 기초를 학습했습니다. 단순히 기능을 구현하는 데 그치지 않고, 실행 흐름과 자원 사용을 추적하며 문제의 원인을 분석하는 습관을 갖게 되었습니다. 또한 동료 평가와 코드 리뷰를 통해 다른 사람이 이해하고 유지보수할 수 있는 코드를 작성하는 중요성을 배웠습니다.",
+  "독일에서는 자동차 임베디드 프로젝트를 수행하며 Raspberry Pi 기반 환경에 Xen 하이퍼바이저와 Yocto Linux를 구성하고, Qt/QML 기반의 헤드 유닛과 디지털 클러스터, CAN 통신 및 센서 기능을 통합했습니다. 이 경험을 통해 소프트웨어가 실제 하드웨어와 연결될 때 발생하는 제약과 구성요소 간 통신의 중요성을 이해했습니다.",
+  "또한 약 16만 건의 데이터를 활용한 아우토반 트럭 주차공간 예측 서비스를 팀으로 개발했습니다. 모델 개발뿐 아니라 백엔드와 클라우드 환경의 연동, 데이터 흐름과 서비스 구조를 함께 고민했습니다. 이 과정에서 개별 기능보다 전체 시스템이 안정적으로 연결되고 사용되는 것이 중요하다는 점을 배웠습니다.",
 ];
 
 export const sections = [
   { id: "projects", index: "01", title: "Projects", ko: "프로젝트" },
-  { id: "awards", index: "02", title: "Awards", ko: "수상" },
-  { id: "experience", index: "03", title: "Experience", ko: "경력" },
-  { id: "skills", index: "04", title: "Skills", ko: "기술" },
-  { id: "education", index: "05", title: "Education", ko: "학력" },
-  { id: "about", index: "06", title: "About", ko: "소개" },
-  { id: "contact", index: "07", title: "Contact", ko: "연락처" },
+  { id: "curriculum", index: "02", title: "42 Cursus", ko: "42 과제" },
+  { id: "awards", index: "03", title: "Awards", ko: "수상" },
+  { id: "experience", index: "04", title: "Experience", ko: "경력" },
+  { id: "skills", index: "05", title: "Skills", ko: "기술" },
+  { id: "education", index: "06", title: "Education", ko: "학력" },
+  { id: "about", index: "07", title: "About", ko: "소개" },
+  { id: "contact", index: "08", title: "Contact", ko: "연락처" },
 ] as const;

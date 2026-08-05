@@ -6,6 +6,8 @@ import { SiteHeader } from "@/components/site-header";
 import {
   about,
   awards,
+  curriculum,
+  curriculumIntro,
   education,
   experience,
   links,
@@ -83,7 +85,56 @@ export default function Home() {
           </div>
         </Section>
 
-        {/* --- 02 Awards -------------------------------------------------- */}
+        {/* --- 02 42 Cursus ------------------------------------------------ */}
+        <Section {...section.curriculum}>
+          <p className="prose-ko max-w-[62ch] text-[1.0625rem] text-ink/85">
+            {curriculumIntro}
+          </p>
+
+          <a
+            href="https://github.com/hyunahn1"
+            target="_blank"
+            rel="noreferrer"
+            className="mt-4 inline-flex items-center gap-1.5 font-mono text-xs font-medium text-signal underline decoration-signal/30 underline-offset-4 transition-colors hover:decoration-signal"
+          >
+            <span aria-hidden>→</span> GitHub 저장소
+          </a>
+
+          <div className="mt-10">
+            {curriculum.map((group) => (
+              <div key={group.group} className="border-t border-line py-8">
+                <div className="label">{group.group}</div>
+                <div className="mt-6 grid gap-x-10 gap-y-8 sm:grid-cols-2">
+                  {group.items.map((course) => (
+                    <div key={course.name} className="min-w-0">
+                      <h3 className="flex flex-wrap items-baseline gap-x-2.5">
+                        <span className="font-mono text-[0.9375rem] font-semibold tracking-tight">
+                          {course.name}
+                        </span>
+                        <span className="text-xs text-muted">{course.ko}</span>
+                      </h3>
+                      <p className="prose-ko mt-2 text-[0.9375rem] text-ink/85">
+                        {course.desc}
+                      </p>
+                      <ul className="mt-3 flex flex-wrap gap-1.5">
+                        {course.learned.map((tag) => (
+                          <li
+                            key={tag}
+                            className="rounded-sm bg-panel px-2 py-1 font-mono text-[0.6875rem] tracking-tight text-muted"
+                          >
+                            {tag}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+        {/* --- 03 Awards -------------------------------------------------- */}
         <Section {...section.awards}>
           <div>
             {awards.map((award) => (
@@ -121,7 +172,7 @@ export default function Home() {
           </div>
         </Section>
 
-        {/* --- 03 Experience --------------------------------------------- */}
+        {/* --- 04 Experience --------------------------------------------- */}
         <Section {...section.experience}>
           <div>
             {experience.map((job) => (
@@ -153,7 +204,7 @@ export default function Home() {
           </div>
         </Section>
 
-        {/* --- 04 Skills -------------------------------------------------- */}
+        {/* --- 05 Skills -------------------------------------------------- */}
         <Section {...section.skills}>
           <div>
             {skills.map((group) => (
@@ -174,7 +225,7 @@ export default function Home() {
           </div>
         </Section>
 
-        {/* --- 05 Education ----------------------------------------------- */}
+        {/* --- 06 Education ----------------------------------------------- */}
         <Section {...section.education}>
           <div>
             {education.map((item) => (
@@ -192,7 +243,7 @@ export default function Home() {
           </div>
         </Section>
 
-        {/* --- 06 About ---------------------------------------------------- */}
+        {/* --- 07 About ---------------------------------------------------- */}
         <Section {...section.about}>
           <div className="max-w-[62ch] space-y-5">
             {about.map((para) => (
@@ -203,7 +254,7 @@ export default function Home() {
           </div>
         </Section>
 
-        {/* --- 07 Contact -------------------------------------------------- */}
+        {/* --- 08 Contact -------------------------------------------------- */}
         <Section {...section.contact}>
           <p className="display text-[clamp(1.75rem,4vw,2.5rem)]">
             <span className="block">함께 만들 시스템이 있다면</span>
