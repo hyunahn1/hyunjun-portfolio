@@ -1,26 +1,117 @@
 @import "tailwindcss";
 
+@theme {
+  --color-paper: #fafafb;
+  --color-panel: #f2f4f7;
+  --color-ink: #0a0c10;
+  --color-muted: #5a6472;
+  --color-line: #dde1e7;
+  --color-signal: #0033ff;
+
+  --font-sans: "Pretendard Variable", Pretendard, ui-sans-serif, system-ui,
+    "Apple SD Gothic Neo", sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  /* 고정 헤더에 제목이 가리지 않도록 */
+  scroll-padding-top: 5.5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "tnum";
+}
+
+::selection {
+  background: var(--color-signal);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* --- 타이포 유틸 ------------------------------------------------------- */
+
+/* 기술 문서 라벨: 섹션 번호, 스펙 키, 기술 스택 */
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* 한글 제목: 굵고 자간을 좁혀 밀도를 만든다 */
+.display {
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+  word-break: keep-all;
+}
+
+.prose-ko {
+  line-height: 1.8;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* 좁은 화면에서 내비게이션이 가로로 스크롤된다는 것을 오른쪽 페이드로 알린다. */
+.nav-scroll {
+  mask-image: linear-gradient(
+    to right,
+    #000 calc(100% - 2rem),
+    transparent 100%
+  );
+}
+
+@media (min-width: 768px) {
+  .nav-scroll {
+    mask-image: none;
+  }
+}
+
+/* 목록 항목 앞의 대시.
+   1px 로 두면 행마다 서브픽셀 위치가 달라져 색이 들쭉날쭉해지므로 2px 로 고정한다. */
+.mark {
+  flex-shrink: 0;
+  width: 0.625rem;
+  height: 2px;
+  margin-top: 0.75rem;
+  background: var(--color-signal);
+}
+
+/* --- 히어로 신호 파형: 로드 시 한 번만 그려진다 ------------------------ */
+
+.trace path {
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  animation: draw 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .trace path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
 }
