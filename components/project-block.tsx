@@ -1,3 +1,4 @@
+import { MediaGallery } from "@/components/media-gallery";
 import type { Project } from "@/content/portfolio";
 
 /**
@@ -46,6 +47,12 @@ export function ProjectBlock({ project }: { project: Project }) {
           </div>
         ))}
       </dl>
+
+      {project.media.length > 0 && (
+        <div className="mb-8">
+          <MediaGallery items={project.media} />
+        </div>
+      )}
 
       <div className="flex flex-wrap items-center gap-1.5 border-t border-line pt-5">
         {project.stack.map((tech) => (
