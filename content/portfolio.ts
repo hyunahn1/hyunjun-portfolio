@@ -26,6 +26,8 @@ export const links: Link[] = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/hyunjun-ahn-35659b305/" },
   { label: "Blog", href: "https://velog.io/@hyunahn1" },
   { label: "Resume PDF", href: "/CV_Hyunjun.pdf" },
+  // /print 페이지를 렌더한 결과물입니다. 내용을 고쳤다면 `npm run pdf` 로 다시 뽑으세요.
+  { label: "Portfolio PDF", href: "/portfolio-ahnhyunjun.pdf" },
 ];
 
 export type SpecRow = { label: string; body: string[] };

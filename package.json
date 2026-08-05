@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "pdf": "bash scripts/make-pdf.sh"
   },
   "dependencies": {
     "next": "16.3.0",

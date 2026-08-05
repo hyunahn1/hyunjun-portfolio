@@ -92,6 +92,47 @@ body {
   background: var(--color-signal);
 }
 
+/* --- 인쇄(PDF) 전용 --------------------------------------------------- */
+
+/* app/print/page.tsx 를 A4 문서로 조판한다. `npm run pdf` 가 이 규칙을 쓴다. */
+@page {
+  size: A4;
+  margin: 13mm 12mm 12mm;
+}
+
+.doc .avoid-break {
+  break-inside: avoid;
+}
+
+.doc .doc-heading {
+  break-after: avoid;
+}
+
+@media print {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  /* 패널 배경과 신호색 강조는 인쇄에서도 유지한다 */
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .doc .page-break {
+    break-before: page;
+  }
+
+  .doc a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
 /* --- 히어로 신호 파형: 로드 시 한 번만 그려진다 ------------------------ */
 
 .trace path {
