@@ -178,44 +178,57 @@ export default function PrintPage() {
         </div>
       </section>
 
-      {/* --- 02 42 Cursus -------------------------------------------------- */}
+
+      {/* --- 02 Experience ------------------------------------------------- */}
       <section className="mt-8">
-        <Heading index="02" title="42 Cursus" ko="42 과제" />
-        <p className="prose-ko mt-4 max-w-[150mm] text-[9pt] leading-[1.6] text-ink/85">
-          {curriculumIntro}
-        </p>
+        <Heading index="02" title="Experience" ko="경력" />
         <div className="mt-4">
-          {curriculum.map((group) => (
-            <div key={group.group} className="avoid-break border-t border-line py-3.5">
+          {experience.map((job) => (
+            <div
+              key={job.org}
+              className="avoid-break grid grid-cols-[26mm_1fr] gap-x-5 border-t border-line py-3.5"
+            >
               <div className="font-mono text-[7.5pt] uppercase tracking-[0.12em] text-muted">
-                {group.group}
+                {job.period}
               </div>
-              <div className="mt-2.5 grid grid-cols-2 gap-x-8 gap-y-3.5">
-                {group.items.map((course) => (
-                  <div key={course.name} className="avoid-break">
-                    <h3 className="flex flex-wrap items-baseline gap-x-2">
-                      <span className="font-mono text-[9pt] font-semibold tracking-tight">
-                        {course.name}
-                      </span>
-                      <span className="text-[7.5pt] text-muted">{course.ko}</span>
-                    </h3>
-                    <p className="prose-ko mt-1 text-[8.5pt] leading-[1.5] text-ink/85">
-                      {course.desc}
-                    </p>
-                    <p className="mt-1 font-mono text-[7pt] leading-[1.5] text-muted">
-                      {course.learned.join(" · ")}
-                    </p>
-                  </div>
-                ))}
+              <div>
+                <h3 className="text-[11pt] font-bold tracking-tight">{job.org}</h3>
+                <p className="font-mono text-[8pt] text-muted">
+                  {job.program}
+                  {job.location && ` · ${job.location}`}
+                </p>
+                <Bullets items={job.bullets} />
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* --- 03 Awards ----------------------------------------------------- */}
+
+      {/* --- 03 Skills ----------------------------------------------------- */}
       <section className="mt-8">
-        <Heading index="03" title="Awards" ko="수상" />
+        <Heading index="03" title="Skills" ko="기술" />
+        <div className="mt-4">
+          {skills.map((group) => (
+            <div
+              key={group.group}
+              className="avoid-break grid grid-cols-[26mm_1fr] gap-x-5 border-t border-line py-2.5"
+            >
+              <div className="font-mono text-[7.5pt] uppercase tracking-[0.12em] text-muted">
+                {group.group}
+              </div>
+              <p className="font-mono text-[8.5pt] leading-[1.6] text-ink/85">
+                {group.items.join("  ·  ")}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+
+      {/* --- 04 Awards ----------------------------------------------------- */}
+      <section className="mt-8">
+        <Heading index="04" title="Awards" ko="수상" />
         <div className="mt-4">
           {awards.map((award) => (
             <div
@@ -260,50 +273,42 @@ export default function PrintPage() {
         </div>
       </section>
 
-      {/* --- 04 Experience ------------------------------------------------- */}
+
+      {/* --- 05 42 Cursus -------------------------------------------------- */}
       <section className="mt-8">
-        <Heading index="04" title="Experience" ko="경력" />
+        <Heading index="05" title="42 Cursus" ko="42 과제" />
+        <p className="prose-ko mt-4 max-w-[150mm] text-[9pt] leading-[1.6] text-ink/85">
+          {curriculumIntro}
+        </p>
         <div className="mt-4">
-          {experience.map((job) => (
-            <div
-              key={job.org}
-              className="avoid-break grid grid-cols-[26mm_1fr] gap-x-5 border-t border-line py-3.5"
-            >
+          {curriculum.map((group) => (
+            <div key={group.group} className="avoid-break border-t border-line py-3.5">
               <div className="font-mono text-[7.5pt] uppercase tracking-[0.12em] text-muted">
-                {job.period}
+                {group.group}
               </div>
-              <div>
-                <h3 className="text-[11pt] font-bold tracking-tight">{job.org}</h3>
-                <p className="font-mono text-[8pt] text-muted">
-                  {job.program}
-                  {job.location && ` · ${job.location}`}
-                </p>
-                <Bullets items={job.bullets} />
+              <div className="mt-2.5 grid grid-cols-2 gap-x-8 gap-y-3.5">
+                {group.items.map((course) => (
+                  <div key={course.name} className="avoid-break">
+                    <h3 className="flex flex-wrap items-baseline gap-x-2">
+                      <span className="font-mono text-[9pt] font-semibold tracking-tight">
+                        {course.name}
+                      </span>
+                      <span className="text-[7.5pt] text-muted">{course.ko}</span>
+                    </h3>
+                    <p className="prose-ko mt-1 text-[8.5pt] leading-[1.5] text-ink/85">
+                      {course.desc}
+                    </p>
+                    <p className="mt-1 font-mono text-[7pt] leading-[1.5] text-muted">
+                      {course.learned.join(" · ")}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* --- 05 Skills ----------------------------------------------------- */}
-      <section className="mt-8">
-        <Heading index="05" title="Skills" ko="기술" />
-        <div className="mt-4">
-          {skills.map((group) => (
-            <div
-              key={group.group}
-              className="avoid-break grid grid-cols-[26mm_1fr] gap-x-5 border-t border-line py-2.5"
-            >
-              <div className="font-mono text-[7.5pt] uppercase tracking-[0.12em] text-muted">
-                {group.group}
-              </div>
-              <p className="font-mono text-[8.5pt] leading-[1.6] text-ink/85">
-                {group.items.join("  ·  ")}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
 
       {/* --- 06 Education -------------------------------------------------- */}
       <section className="mt-8">
@@ -325,6 +330,7 @@ export default function PrintPage() {
           ))}
         </div>
       </section>
+
 
       {/* --- 07 About ------------------------------------------------------ */}
       <section className="avoid-break mt-8">

@@ -46,4 +46,15 @@ done
   --print-to-pdf="$OUT" \
   "http://localhost:$PORT/print"
 
-echo "생성됨: $OUT"
+# 영문 이력서 (app/cv/page.tsx)
+"$CHROME" \
+  --headless \
+  --disable-gpu \
+  --no-pdf-header-footer \
+  --run-all-compositor-stages-before-draw \
+  --virtual-time-budget=20000 \
+  --print-to-pdf="public/CV_Hyunjun.pdf" \
+  "http://localhost:$PORT/cv"
+cp public/CV_Hyunjun.pdf CV_Hyunjun.pdf
+
+echo "생성됨: $OUT, public/CV_Hyunjun.pdf"

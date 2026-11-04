@@ -9,13 +9,13 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "안현준 | System & Embedded Software Engineer",
+  title: "안현준 | AI / ML Engineer",
   description:
-    "C/C++와 Linux를 중심으로 임베디드 시스템과 자동차 소프트웨어를 개발하는 안현준의 포트폴리오입니다.",
+    "LLM 증류·수요 예측 모델을 설계부터 운영까지 만드는 AI 엔지니어 안현준의 포트폴리오입니다.",
   openGraph: {
-    title: "안현준 | System & Embedded Software Engineer",
+    title: "안현준 | AI / ML Engineer",
     description:
-      "C/C++와 Linux를 중심으로 임베디드 시스템과 자동차 소프트웨어를 개발하는 안현준의 포트폴리오입니다.",
+      "LLM 증류·수요 예측 모델을 설계부터 운영까지 만드는 AI 엔지니어 안현준의 포트폴리오입니다.",
     locale: "ko_KR",
     type: "website",
   },

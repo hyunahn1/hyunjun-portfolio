@@ -85,7 +85,102 @@ export default function Home() {
           </div>
         </Section>
 
-        {/* --- 02 42 Cursus ------------------------------------------------ */}
+
+        {/* --- 02 Experience --------------------------------------------- */}
+        <Section {...section.experience}>
+          <div>
+            {experience.map((job) => (
+              <div
+                key={job.org}
+                className="grid gap-x-8 gap-y-3 border-t border-line py-7 md:grid-cols-[11rem_1fr]"
+              >
+                <div className="label pt-1">{job.period}</div>
+                <div>
+                  <h3 className="text-lg font-bold tracking-tight">{job.org}</h3>
+                  <p className="mt-0.5 font-mono text-sm text-muted">
+                    {job.program}
+                    {job.location && ` · ${job.location}`}
+                  </p>
+                  <ul className="mt-4 space-y-1.5">
+                    {job.bullets.map((line) => (
+                      <li
+                        key={line}
+                        className="prose-ko flex gap-2.5 text-[0.9375rem] text-ink/85"
+                      >
+                        <span aria-hidden className="mark" />
+                        <span>{line}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+
+        {/* --- 03 Skills -------------------------------------------------- */}
+        <Section {...section.skills}>
+          <div>
+            {skills.map((group) => (
+              <div
+                key={group.group}
+                className="grid gap-x-8 gap-y-3 border-t border-line py-6 md:grid-cols-[11rem_1fr]"
+              >
+                <div className="label pt-1">{group.group}</div>
+                <ul className="flex flex-wrap gap-x-5 gap-y-2">
+                  {group.items.map((item) => (
+                    <li key={item} className="font-mono text-sm text-ink/85">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+
+        {/* --- 04 Awards -------------------------------------------------- */}
+        <Section {...section.awards}>
+          <div>
+            {awards.map((award) => (
+              <div
+                key={award.title + award.event}
+                className="grid gap-x-8 gap-y-3 border-t border-line py-7 md:grid-cols-[11rem_1fr]"
+              >
+                <div className="label pt-1">{award.period}</div>
+                <div>
+                  <h3 className="text-lg font-bold tracking-tight">
+                    {award.title}
+                    <span className="text-muted"> · </span>
+                    <span className="font-medium">{award.event}</span>
+                  </h3>
+                  <p className="mt-0.5 font-mono text-sm text-muted">{award.org}</p>
+                  <ul className="mt-4 space-y-1.5">
+                    {award.bullets.map((line) => (
+                      <li
+                        key={line}
+                        className="prose-ko flex gap-2.5 text-[0.9375rem] text-ink/85"
+                      >
+                        <span aria-hidden className="mark" />
+                        <span>{line}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  {award.media.length > 0 && (
+                    <div className="mt-6">
+                      <MediaGallery items={award.media} />
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+
+        {/* --- 05 42 Cursus ------------------------------------------------ */}
         <Section {...section.curriculum}>
           <p className="prose-ko max-w-[62ch] text-[1.0625rem] text-ink/85">
             {curriculumIntro}
@@ -134,96 +229,6 @@ export default function Home() {
           </div>
         </Section>
 
-        {/* --- 03 Awards -------------------------------------------------- */}
-        <Section {...section.awards}>
-          <div>
-            {awards.map((award) => (
-              <div
-                key={award.title + award.event}
-                className="grid gap-x-8 gap-y-3 border-t border-line py-7 md:grid-cols-[11rem_1fr]"
-              >
-                <div className="label pt-1">{award.period}</div>
-                <div>
-                  <h3 className="text-lg font-bold tracking-tight">
-                    {award.title}
-                    <span className="text-muted"> · </span>
-                    <span className="font-medium">{award.event}</span>
-                  </h3>
-                  <p className="mt-0.5 font-mono text-sm text-muted">{award.org}</p>
-                  <ul className="mt-4 space-y-1.5">
-                    {award.bullets.map((line) => (
-                      <li
-                        key={line}
-                        className="prose-ko flex gap-2.5 text-[0.9375rem] text-ink/85"
-                      >
-                        <span aria-hidden className="mark" />
-                        <span>{line}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  {award.media.length > 0 && (
-                    <div className="mt-6">
-                      <MediaGallery items={award.media} />
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </Section>
-
-        {/* --- 04 Experience --------------------------------------------- */}
-        <Section {...section.experience}>
-          <div>
-            {experience.map((job) => (
-              <div
-                key={job.org}
-                className="grid gap-x-8 gap-y-3 border-t border-line py-7 md:grid-cols-[11rem_1fr]"
-              >
-                <div className="label pt-1">{job.period}</div>
-                <div>
-                  <h3 className="text-lg font-bold tracking-tight">{job.org}</h3>
-                  <p className="mt-0.5 font-mono text-sm text-muted">
-                    {job.program}
-                    {job.location && ` · ${job.location}`}
-                  </p>
-                  <ul className="mt-4 space-y-1.5">
-                    {job.bullets.map((line) => (
-                      <li
-                        key={line}
-                        className="prose-ko flex gap-2.5 text-[0.9375rem] text-ink/85"
-                      >
-                        <span aria-hidden className="mark" />
-                        <span>{line}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Section>
-
-        {/* --- 05 Skills -------------------------------------------------- */}
-        <Section {...section.skills}>
-          <div>
-            {skills.map((group) => (
-              <div
-                key={group.group}
-                className="grid gap-x-8 gap-y-3 border-t border-line py-6 md:grid-cols-[11rem_1fr]"
-              >
-                <div className="label pt-1">{group.group}</div>
-                <ul className="flex flex-wrap gap-x-5 gap-y-2">
-                  {group.items.map((item) => (
-                    <li key={item} className="font-mono text-sm text-ink/85">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </Section>
 
         {/* --- 06 Education ----------------------------------------------- */}
         <Section {...section.education}>
@@ -243,6 +248,7 @@ export default function Home() {
           </div>
         </Section>
 
+
         {/* --- 07 About ---------------------------------------------------- */}
         <Section {...section.about}>
           <div className="max-w-[62ch] space-y-5">
@@ -253,6 +259,7 @@ export default function Home() {
             ))}
           </div>
         </Section>
+
 
         {/* --- 08 Contact -------------------------------------------------- */}
         <Section {...section.contact}>
