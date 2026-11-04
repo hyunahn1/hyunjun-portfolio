@@ -25,10 +25,16 @@ function Entries({ items }: { items: CvEntry[] }) {
       {items.map((e) => (
         <div key={e.title} className="avoid-break">
           <div className="flex items-baseline justify-between gap-4">
-            <h3 className="text-[9.5pt] font-bold">{e.title}</h3>
+            <h3 className="text-[9.5pt] font-bold">
+              {e.title}
+              {/* 불릿 없는 항목(학력)은 부제를 한 줄에 붙여 지면을 아낀다 */}
+              {!e.bullets && e.sub && (
+                <span className="font-normal italic text-muted"> · {e.sub}</span>
+              )}
+            </h3>
             <span className="shrink-0 text-[8.5pt] text-ink/70">{e.period}</span>
           </div>
-          {e.sub && <p className="text-[8.5pt] italic text-muted">{e.sub}</p>}
+          {e.bullets && e.sub && <p className="text-[8.5pt] italic text-muted">{e.sub}</p>}
           {e.bullets && (
             <ul className="mt-1 list-disc space-y-0.5 pl-5 text-[8.75pt] leading-[1.45]">
               {e.bullets.map((b) => (

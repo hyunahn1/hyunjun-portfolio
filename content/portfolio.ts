@@ -375,31 +375,77 @@ export const projects: Project[] = [
   {
     code: "PRJ-05",
     org: "만월회 · 모바일 앱 · 2026.09 — 현재",
-    title: "만월체크 — 사장님 커뮤니티 · UI/UX 개선",
-    titleEn: "Manwol Check — Owner Community & UI/UX Refactoring",
+    title: "만월체크 — 식자재몰 · 레시피 · 사장님 커뮤니티",
+    titleEn: "Manwol Check — In-app B2B Grocery Mall, Recipes & Owner Community",
     overview:
-      "카페 사장님과 직원을 위한 매뉴얼·근태·레시피·재고·식자재 주문 통합 운영 앱입니다. 앱 안에 사장님 전용 커뮤니티를 새로 만들고, 기존 화면들을 리팩터링해 디자인 시스템에 맞춰 다시 다듬는 일을 맡았습니다.",
+      "카페 사장님과 직원이 매뉴얼·근태·급여·레시피·재고를 함께 관리하는 매장 운영 앱입니다. 앱 안의 식자재 주문몰(만월상회)과 레시피 기능을 맡아, 레시피에서 재료를 바로 사고 재고가 떨어질 때쯤 장바구니가 미리 채워지는 흐름을 만들었습니다. 사장님 커뮤니티를 새로 만들고 기존 화면들을 리팩터링해 UI/UX를 다듬었습니다.",
     spec: [
       {
-        label: "My Role",
+        label: "Problem",
         body: [
-          "사장님 커뮤니티 설계·개발: 채널(질문·정보·레시피·중고거래·자유), 글·댓글·답글, 저장, 검색, DM, 프로필",
-          "사업자 인증 매장 표시, 커뮤니티 규정 동의, 신고·차단 등 이용자 글 앱의 안전장치와 운영 대시보드(신고 처리·정지)",
-          "푸시 → 글 바로 열기, 지역 필터, 주간 인기 글, 공유 링크, 레시피·매뉴얼 불러오기 등 2차 기능",
-          "Remote Config 스위치로 커뮤니티를 출시 빌드에서 켜고 끌 수 있게 구성",
-          "홈 화면을 Figma 새 디자인으로 교체, 레시피 책장·근로자 현황 등 기존 화면 재설계",
-          "첫 로딩 스켈레톤, iOS 기본 전환, 상품 사진 Hero 전환 등 체감 품질 개선과 태블릿 폭 대응",
+          "만월회의 실제 쇼핑몰은 외부 쇼핑몰 빌더(아임웹)에 있고, 이 서비스는 주문 생성 API를 제공하지 않습니다. 앱에서 결제·배송·환불·적립금까지 끝나는 B2B 주문 경험을 만들면서도, 상품·회원·적립금의 원본은 그대로 아임웹에 두어야 했습니다.",
         ],
       },
       {
-        label: "Focus",
+        label: "식자재몰",
         body: [
-          "새 화면도 기존 SEED 디자인 시스템의 골격·크기·간격을 그대로 쓰고, 커뮤니티만의 규칙(파랑은 지금 탭 표시, 빨강은 만들기·나가기)을 문서로 정해 화면 사이 일관성을 지켰습니다. 사장님이 쓰는 말 그대로 쓰고, 빈 화면은 다음에 할 일을 말하도록 했습니다.",
+          "아임웹 상품·회원·주문을 Cloud Functions로 주기 동기화(Firestore · Cloud SQL)하고, 앱 주문은 자체 장부(PostgreSQL)에 기록해 만월시스템 출고 흐름에 연결",
+          "토스페이먼츠 결제, 저장 카드로 비밀번호만 입력하는 바로결제, '밀어서 결제' 인터랙션",
+          "배송비를 상품별 배송 템플릿·등급 무료배송·도서산간·면세 배분까지 아임웹과 같은 규칙으로 계산",
+          "출고 전 셀프 즉시취소 / 출고 후 반품·환불 요청 분기, 환불 계좌 암호화 저장, 적립금 실시간 반영",
+          "상품명 키워드 분류를 아임웹 카테고리 트리로 바꿔 오분류 155개 정리, 회원 등급 전용 카테고리 노출",
+          "재구매 예측(PRJ-02)이 알림을 보내는 시각에 스마트 장바구니를 자동으로 채우고, 알림 열기·자동 담기·그대로 결제 이벤트를 기록",
+        ],
+      },
+      {
+        label: "레시피",
+        body: [
+          "레시피 상세의 '재료 구매하기' — 레시피 재료를 식자재몰 상품과 연결해, 옵션·수량을 골라 바로 담는 시트",
+          "'약 N번 만들 수 있어요' — 상품명의 묶음 표기(60g×10개, 1kg 3개, 18개입)를 해석하고 g↔ml를 맞춰 한 번 구매로 몇 잔을 만들 수 있는지 계산",
+          "내 레시피 / 추천 레시피 탭, 분류 줄, 초성 검색, 폴더 관리로 레시피 탭 재설계, 본사 추천 레시피 푸시 배포",
+        ],
+      },
+      {
+        label: "커뮤니티",
+        body: [
+          "사장님 전용 커뮤니티: 채널, 글·댓글·답글, 저장, 검색, DM, 프로필, 지역 필터, 주간 인기 글, 공유 링크",
+          "사업자 인증 표시, 규정 동의, 신고·차단과 운영 대시보드(신고 처리·정지), Remote Config로 출시 빌드에서 켜고 끄기",
+        ],
+      },
+      {
+        label: "UI/UX",
+        body: [
+          "홈을 Figma 새 디자인으로 교체하고 기존 화면을 SEED 디자인 시스템 기준으로 리팩터링",
+          "첫 로딩 스켈레톤, iOS 기본 전환, 상품 사진 Hero 전환, 태블릿 폭 대응",
         ],
       },
     ],
-    stack: ["Flutter", "Dart", "Firebase", "Firestore", "Cloud Functions", "Remote Config", "Figma"],
+    stack: [
+      "Flutter",
+      "Dart",
+      "Firebase",
+      "Cloud Functions",
+      "Cloud SQL (PostgreSQL)",
+      "Firestore",
+      "Toss Payments",
+      "Remote Config",
+      "Figma",
+    ],
     media: [
+      {
+        type: "image",
+        src: "/media/omcheck-shop.webp",
+        alt: "만월체크 식자재몰 홈. 전체 상품 620개와 상품 검색창, 베이커리/디저트·음료베이스·매장용품 등 카테고리별 상품 수가 사진 타일로 보인다.",
+        caption: "식자재몰 — 아임웹 카테고리 트리로 정리한 상품 620개",
+        portrait: true,
+      },
+      {
+        type: "image",
+        src: "/media/omcheck-recipe.webp",
+        alt: "만월체크 레시피 탭. 내 레시피 13·추천 레시피 100 탭, 초성 검색창, 분류 아이콘 줄, 자주 보는 레시피 사진 줄과 내 레시피 목록.",
+        caption: "레시피 탭 — 내/추천 레시피, 초성 검색, 분류 줄, 자주 보는 레시피",
+        portrait: true,
+      },
       {
         type: "image",
         src: "/media/omcheck-community.webp",
@@ -409,23 +455,9 @@ export const projects: Project[] = [
       },
       {
         type: "image",
-        src: "/media/omcheck-recipe-shelf.webp",
-        alt: "만월체크 레시피 화면. 책장에 꽂힌 책 모양으로 레시피 분류를 보여 주고, 아래에 추천 레시피가 있다.",
-        caption: "레시피 재설계 — 책장 모양 분류와 추천 레시피",
-        portrait: true,
-      },
-      {
-        type: "image",
-        src: "/media/omcheck-recipe-list.webp",
-        alt: "만월체크 레시피 목록. 분류 탭과 사진이 있는 레시피 행 목록.",
-        caption: "레시피 목록 — 분류 탭과 사진 행",
-        portrait: true,
-      },
-      {
-        type: "image",
-        src: "/media/omcheck-staff.webp",
-        alt: "만월체크 근태관리 화면. 근로자 현황 목록과 출근 상태, 전화 버튼, 관리 메뉴.",
-        caption: "근로자 현황 — 출근 상태와 관리 메뉴",
+        src: "/media/omcheck-home.webp",
+        alt: "만월체크 사장님 홈. 날짜 탭, 오픈·마감 매뉴얼 카드, AI 커피셋팅, 기타 매뉴얼 목록과 하단 탭.",
+        caption: "홈 — Figma 새 디자인으로 교체한 날짜 탭·매뉴얼 카드",
         portrait: true,
       },
     ],
@@ -700,7 +732,7 @@ export const experience: Experience[] = [
       "LLM 지식 증류 기반 F&B 트렌드 조기 탐지 시스템 설계·운영 — 사내 GPU 서버에서 매일 무인 실행 (PRJ-01)",
       "XGBoost 기반 매장별 재구매 시점 예측 배치를 Cloud Run에 배포해 앱 알림·장바구니 제안과 연동 (PRJ-02)",
       "디저트 판매처 지도 앱 「디저트맵」을 1인 개발해 App Store·Google Play 출시 (PRJ-04)",
-      "매장 운영 앱 「만월체크」의 사장님 커뮤니티 개발과 기존 화면 리팩터링·UI/UX 개선 담당 (PRJ-05)",
+      "매장 운영 앱 「만월체크」의 식자재몰(결제·배송·환불)·레시피(재료 구매 연결) 개발, 사장님 커뮤니티 신설과 기존 화면 UI/UX 리팩터링 담당 (PRJ-05)",
     ],
   },
   {
@@ -903,7 +935,7 @@ export const cv = {
         "Own the company's in-house AI systems from data collection and model training to serving, dashboards, and daily operation",
         "Shipped two production AI systems (Trend Radar, Reorder Forecasting — see Projects), both running unattended every day",
         "Built and launched Dessert Map, a Flutter map app for trending desserts, on the App Store and Google Play as a solo developer",
-        "Developed the owner community inside the Manwol Check store-operations app and led UI/UX refactoring of existing screens",
+        "Built the in-app grocery mall and recipe features of the Manwol Check store-operations app, launched its owner community, and led UI/UX refactoring",
       ],
     },
     {
@@ -944,16 +976,17 @@ export const cv = {
       period: "2026 – Present",
       bullets: [
         "Solo-built and shipped an iOS / Android app that maps where trending desserts are sold; a daily collector across 17 provinces creates stores only from verified place results and confirms sales with 2+ matching posts, removing false positives from name guessing",
-        "Expanded from one dessert to several categories (e.g. 251 stores for one trend), with crowd reports gated by 3+ distinct users and an admin review console requiring evidence from the last 180 days",
+        "Expanded to several dessert categories (up to 251 stores each) with crowd reports gated by 3+ distinct users and an admin review console",
       ],
     },
     {
-      title: "Manwol Check — Owner Community & UI/UX Refactoring · Manwol",
-      sub: "Flutter, Firebase, Cloud Functions, Remote Config, Figma",
+      title: "Manwol Check — In-app B2B Grocery Mall, Recipes & Community · Manwol",
+      sub: "Flutter, Firebase Cloud Functions, Cloud SQL (PostgreSQL), Firestore, Toss Payments, Remote Config",
       period: "2026 – Present",
       bullets: [
-        "Built an in-app community for café owners (channels, posts, comments, search, DMs, saved posts) with business verification, reporting / blocking, and a moderation dashboard, gated by a Remote Config switch",
-        "Refactored existing screens onto the SEED design system — new Figma home, recipe shelf, staff status — and added skeleton loading and native transitions",
+        "Built in-app B2B ordering on top of an external store builder with no order-creation API: synced products / members via Cloud Functions, kept app orders in a PostgreSQL ledger feeding fulfillment, and implemented Toss payments, saved-card one-tap checkout, shipping-fee rules, self-cancel vs. return flows, and encrypted refund accounts",
+        "Linked recipes to the mall — \"buy ingredients\" sheet and a \"makes about N servings\" estimate parsed from pack sizes (60g×10, 1kg ×3) with g↔ml conversion — and auto-filled smart carts at the reorder model's alert time",
+        "Launched an owner community (channels, search, DMs, reporting / blocking, moderation dashboard) and refactored screens onto the SEED design system",
       ],
     },
     {
@@ -961,8 +994,7 @@ export const cv = {
       sub: "Python, PyTorch, LightGBM, Kubernetes, TimescaleDB, Feast, Redis, Grafana, Flutter",
       period: "2026 – Present",
       bullets: [
-        "Forecasting truck parking availability at German Autobahn rest areas from ~160K Toll Collect SID records, comparing LightGBM and deep models against a seasonal baseline",
-        "Deployed the inference stack on Kubernetes with TimescaleDB, Feast feature serving, Redis caching, and Grafana monitoring of ingestion and per-horizon MAE",
+        "Forecasting rest-area parking availability from ~160K Toll Collect SID records (LightGBM and deep models vs. a seasonal baseline), served on Kubernetes with TimescaleDB, Feast, Redis, and Grafana MAE monitoring",
       ],
     },
     {
