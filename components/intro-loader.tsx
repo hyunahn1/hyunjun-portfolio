@@ -46,11 +46,11 @@ export function IntroLoader() {
       exitTimer = window.setTimeout(() => {
         setPhase("exiting");
         root.classList.add("intro-ready");
+        doneTimer = window.setTimeout(() => {
+          setPhase("done");
+          root.classList.remove("intro-lock");
+        }, 1350);
       }, 180);
-      doneTimer = window.setTimeout(() => {
-        setPhase("done");
-        root.classList.remove("intro-lock");
-      }, 1280);
     };
 
     animationFrame = requestAnimationFrame(tick);
@@ -76,6 +76,8 @@ export function IntroLoader() {
       aria-valuemax={100}
       aria-valuenow={count}
     >
+      <div className="loader-aperture" aria-hidden />
+
       <div className="loader-orbit" aria-hidden>
         <i />
         <i />
