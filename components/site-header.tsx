@@ -5,6 +5,7 @@ import { profile, sections } from "@/content/portfolio";
 
 export function SiteHeader() {
   const [active, setActive] = useState<string>("");
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const targets = sections
@@ -23,38 +24,46 @@ export function SiteHeader() {
     );
 
     targets.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.72);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
+  const primarySections = sections.filter((section) =>
+    ["projects", "experience", "about", "contact"].includes(section.id),
+  );
+
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md">
-      <div className="mx-auto flex h-14 max-w-[920px] items-center gap-6 px-6 md:px-10">
-        <a href="#top" className="shrink-0 leading-none">
+    <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
+      <div className="site-header-inner">
+        <a href="#top" className="site-brand">
           <span className="font-mono text-sm font-semibold tracking-tight">
             {profile.name}
           </span>
-          <span className="label ml-2 hidden sm:inline">{profile.nameEn}</span>
+          <span className="site-brand-en">{profile.nameEn}</span>
         </a>
 
-        <nav
-          aria-label="섹션"
-          className="nav-scroll -mx-2 flex flex-1 items-center gap-1 overflow-x-auto px-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:justify-end"
-        >
-          {sections.map((s) => (
+        <nav aria-label="섹션" className="site-nav">
+          {primarySections.map((s) => (
             <a
               key={s.id}
               href={`#${s.id}`}
               aria-current={active === s.id ? "true" : undefined}
-              className={`whitespace-nowrap rounded px-2 py-1 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.14em] transition-colors ${
-                active === s.id
-                  ? "text-signal"
-                  : "text-muted hover:text-ink"
-              }`}
+              className={active === s.id ? "is-active" : undefined}
             >
               {s.title}
             </a>
           ))}
         </nav>
+
+        <a href="mailto:ahnhj99999@gmail.com" className="site-contact">
+          Let&apos;s talk
+        </a>
       </div>
     </header>
   );

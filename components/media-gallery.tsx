@@ -10,13 +10,11 @@ export function MediaGallery({ items }: { items: Media[] }) {
   if (items.length === 0) return null;
 
   return (
-    <div className="grid items-start gap-5 sm:grid-cols-2">
+    <div className="media-grid">
       {items.map((item) => (
-        <figure key={item.src} className="min-w-0">
+        <figure key={item.src} className="media-figure">
           <div
-            className={`overflow-hidden rounded-sm border border-line bg-panel ${
-              item.portrait ? "aspect-[3/4]" : "aspect-[4/3]"
-            }`}
+            className={`media-frame ${item.portrait ? "is-portrait" : ""}`}
           >
             {item.type === "video" ? (
               <video
@@ -25,7 +23,7 @@ export function MediaGallery({ items }: { items: Media[] }) {
                 controls
                 playsInline
                 preload="none"
-                className="h-full w-full object-contain"
+                className="media-object"
               >
                 {item.alt}
               </video>
@@ -35,11 +33,11 @@ export function MediaGallery({ items }: { items: Media[] }) {
                 alt={item.alt}
                 loading="lazy"
                 decoding="async"
-                className="h-full w-full object-contain"
+                className="media-object"
               />
             )}
           </div>
-          <figcaption className="prose-ko mt-2.5 font-mono text-xs tracking-tight text-muted">
+          <figcaption className="media-caption">
             {item.type === "video" && <span className="text-signal">▶ </span>}
             {item.caption}
           </figcaption>

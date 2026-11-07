@@ -13,16 +13,15 @@ type Props = {
  */
 export function Section({ id, index, title, ko, children }: Props) {
   return (
-    <section id={id} className="scroll-mt-24 py-14 md:py-18">
-      <div className="flex items-baseline gap-4">
-        <span className="font-mono text-sm font-semibold text-signal">{index}</span>
-        <h2 className="font-mono text-sm font-semibold uppercase tracking-[0.18em]">
-          {title}
-        </h2>
-        <span aria-hidden className="h-px flex-1 bg-line" />
-        <span className="label">{ko}</span>
+    <section id={id} className="content-section scroll-mt-24">
+      <div className="section-heading">
+        <span className="section-index">{index}</span>
+        <div>
+          <h2>{title}</h2>
+          <p>{ko}</p>
+        </div>
       </div>
-      <div className="mt-10">{children}</div>
+      <div className="section-body">{children}</div>
     </section>
   );
 }

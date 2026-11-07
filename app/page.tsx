@@ -1,7 +1,9 @@
+import Image from "next/image";
+import { FeaturedWork } from "@/components/featured-work";
+import { HeroScene } from "@/components/hero-scene";
 import { MediaGallery } from "@/components/media-gallery";
 import { ProjectBlock } from "@/components/project-block";
 import { Section } from "@/components/section";
-import { SignalTrace } from "@/components/signal-trace";
 import { SiteHeader } from "@/components/site-header";
 import {
   about,
@@ -24,57 +26,61 @@ export default function Home() {
     <>
       <SiteHeader />
 
-      <main id="top" className="mx-auto w-full max-w-[920px] flex-1 px-6 md:px-10">
-        {/* --- Hero ------------------------------------------------------ */}
-        <section className="pt-16 md:pt-24">
-          <p className="font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-signal">
-            {profile.role}
-          </p>
+      <main id="top" className="flex-1">
+        <section className="hero-shell">
+          <Image
+            src="/media/hero-signal-field.png"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="hero-art"
+          />
+          <HeroScene />
+          <div className="hero-shade" aria-hidden />
 
-          <h1 className="display mt-6 text-[clamp(2.125rem,6vw,3.75rem)]">
-            {profile.headline.map((line) => (
-              <span key={line} className="block">
-                {line}
-              </span>
-            ))}
-          </h1>
+          <div className="hero-inner">
+            <p className="hero-kicker">
+              <span className="hero-live" aria-hidden />
+              {profile.role} · {profile.nameEn}
+            </p>
 
-          <p className="prose-ko mt-8 max-w-[60ch] text-[1.0625rem] text-muted">
-            {profile.intro}
-          </p>
+            <h1 className="hero-title">
+              {profile.headline.map((line) => (
+                <span key={line}>{line}</span>
+              ))}
+            </h1>
 
-          <dl className="mt-8 flex flex-col gap-2 sm:flex-row sm:gap-10">
-            {profile.availability.map((item) => (
-              <div key={item.label} className="flex items-baseline gap-3">
-                <dt className="label">{item.label}</dt>
-                <dd className="text-sm text-ink/80">{item.value}</dd>
-              </div>
-            ))}
-          </dl>
-
-          <ul className="mt-10 flex flex-wrap gap-2">
-            {links.map((link, i) => (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  target={link.href.startsWith("http") ? "_blank" : undefined}
-                  rel={link.href.startsWith("http") ? "noreferrer" : undefined}
-                  className={`inline-block rounded-sm px-4 py-2.5 font-mono text-xs font-medium tracking-tight transition-colors ${
-                    i === 0
-                      ? "bg-ink text-paper hover:bg-signal"
-                      : "border border-line text-ink hover:border-ink"
-                  }`}
-                >
-                  {link.label}
+            <div className="hero-lower">
+              <p className="hero-intro">{profile.heroIntro}</p>
+              <div className="hero-actions">
+                <a href="#projects" className="hero-action-primary">
+                  프로젝트 보기
                 </a>
-              </li>
-            ))}
-          </ul>
+                <a href="mailto:ahnhj99999@gmail.com" className="hero-action-secondary">
+                  이메일 보내기
+                </a>
+              </div>
+            </div>
 
-          <div className="mt-14">
-            <SignalTrace />
+            <dl className="hero-metrics">
+              {profile.metrics.map((metric) => (
+                <div key={metric.label}>
+                  <dt>{metric.label}</dt>
+                  <dd>{metric.value}</dd>
+                </div>
+              ))}
+            </dl>
+
+            <a href="#selected" className="hero-scroll" aria-label="대표 작업으로 이동">
+              <span>Scroll to explore</span>
+              <i aria-hidden />
+            </a>
           </div>
         </section>
+
+        <div id="selected" className="site-content">
+          <FeaturedWork projects={projects} />
 
         {/* --- 01 Projects ----------------------------------------------- */}
         <Section {...section.projects}>
@@ -293,10 +299,11 @@ export default function Home() {
             ))}
           </ul>
         </Section>
+        </div>
       </main>
 
-      <footer className="border-t border-line">
-        <div className="mx-auto flex max-w-[920px] flex-wrap items-center justify-between gap-2 px-6 py-8 md:px-10">
+      <footer className="site-footer">
+        <div className="site-footer-inner">
           <span className="label">
             © {new Date().getFullYear()} {profile.name} · {profile.nameEn}
           </span>

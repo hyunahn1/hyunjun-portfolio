@@ -9,7 +9,14 @@ export const profile = {
   name: "안현준",
   nameEn: "Ahn Hyunjun",
   role: "AI / ML Engineer",
-  headline: ["안녕하세요.", "매일 운영되는 AI를", "만드는 엔지니어입니다."],
+  headline: ["모델을 만들고,", "매일 운영합니다."],
+  heroIntro:
+    "LLM을 작고 정확하게 증류하고, 예측 모델을 실제 알림과 장바구니까지 연결합니다. 지표로 검증하고 매일 무인으로 돌아가게 만듭니다.",
+  metrics: [
+    { label: "Distilled model", value: "4B > 30B" },
+    { label: "Daily pipeline", value: "06:00 AUTO" },
+    { label: "Backtest", value: "22,311 cases" },
+  ],
   intro:
     "LLM 지식 증류로 F&B 트렌드를 조기 탐지하는 시스템과, XGBoost로 B2B 매장의 재구매 시점을 예측하는 시스템을 설계부터 운영까지 직접 만들었습니다. 두 시스템 모두 매일 무인으로 실행되며, 고정 평가셋·시간 순 검증·홀드아웃으로 모델이 정말 나아졌는지를 숫자로 확인합니다. C/C++·Linux 시스템 프로그래밍 기반 위에서, 모델을 실제 서비스로 연결하는 일에 집중하고 있습니다.",
   availability: [
