@@ -76,6 +76,7 @@ export function IntroLoader() {
       aria-valuemax={100}
       aria-valuenow={count}
     >
+      <div className="loader-curtain" aria-hidden />
       <div className="loader-aperture" aria-hidden />
       <div className="loader-shockwaves" aria-hidden>
         <i />
