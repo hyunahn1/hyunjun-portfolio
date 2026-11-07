@@ -14,6 +14,12 @@ type Props = {
 export function Section({ id, index, title, ko, children }: Props) {
   return (
     <section id={id} className="content-section scroll-mt-24">
+      <div className="section-watermark" aria-hidden>
+        <div className="section-watermark-track">
+          <span>{title}</span>
+          <span>{title}</span>
+        </div>
+      </div>
       <div className="section-heading" data-reveal="side">
         <span className="section-index">{index}</span>
         <div>
