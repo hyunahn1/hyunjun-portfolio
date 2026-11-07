@@ -9,7 +9,7 @@ export const profile = {
   name: "안현준",
   nameEn: "Ahn Hyunjun",
   role: "AI / ML Engineer",
-  headline: ["모델을 만들고,", "매일 운영합니다."],
+  headline: ["AI THAT RUNS", "WHEN NOBODY’S", "WATCHING."],
   heroIntro:
     "LLM을 작고 정확하게 증류하고, 예측 모델을 실제 알림과 장바구니까지 연결합니다. 지표로 검증하고 매일 무인으로 돌아가게 만듭니다.",
   metrics: [

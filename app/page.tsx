@@ -1,8 +1,10 @@
 import Image from "next/image";
 import { FeaturedWork } from "@/components/featured-work";
 import { HeroScene } from "@/components/hero-scene";
+import { IntroLoader } from "@/components/intro-loader";
 import { MediaGallery } from "@/components/media-gallery";
 import { ProjectBlock } from "@/components/project-block";
+import { ScrollMotion } from "@/components/scroll-motion";
 import { Section } from "@/components/section";
 import { SiteHeader } from "@/components/site-header";
 import {
@@ -24,6 +26,8 @@ const section = Object.fromEntries(sections.map((s) => [s.id, s]));
 export default function Home() {
   return (
     <>
+      <IntroLoader />
+      <ScrollMotion />
       <SiteHeader />
 
       <main id="top" className="flex-1">
@@ -47,7 +51,9 @@ export default function Home() {
 
             <h1 className="hero-title">
               {profile.headline.map((line) => (
-                <span key={line}>{line}</span>
+                <span key={line} className="hero-line">
+                  <span className="hero-line-inner">{line}</span>
+                </span>
               ))}
             </h1>
 

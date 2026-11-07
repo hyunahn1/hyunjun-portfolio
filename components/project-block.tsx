@@ -12,21 +12,25 @@ export function ProjectBlock({ project }: { project: Project }) {
       id={`project-${project.code.toLowerCase()}`}
       className="project-block scroll-mt-24"
     >
-      <div className="project-meta">
+      <div className="project-meta" data-reveal="row">
         <span className="project-code">
           {project.code}
         </span>
         <span className="label">{project.org}</span>
       </div>
 
-      <h3 className="display project-title">{project.title}</h3>
-      <p className="mt-1.5 font-mono text-sm text-muted">{project.titleEn}</p>
+      <h3 className="display project-title" data-reveal="title">
+        {project.title}
+      </h3>
+      <p className="mt-1.5 font-mono text-sm text-muted" data-reveal="row">
+        {project.titleEn}
+      </p>
 
-      <p className="prose-ko project-overview">
+      <p className="prose-ko project-overview" data-reveal="body">
         {project.overview}
       </p>
 
-      <dl className="project-specs">
+      <dl className="project-specs" data-reveal="body">
         {project.spec.map((row) => (
           <div
             key={row.label}
@@ -57,7 +61,7 @@ export function ProjectBlock({ project }: { project: Project }) {
         </div>
       )}
 
-      <div className="project-stack">
+      <div className="project-stack" data-reveal="row">
         {project.stack.map((tech) => (
           <span
             key={tech}

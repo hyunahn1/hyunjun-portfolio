@@ -14,14 +14,14 @@ type Props = {
 export function Section({ id, index, title, ko, children }: Props) {
   return (
     <section id={id} className="content-section scroll-mt-24">
-      <div className="section-heading">
+      <div className="section-heading" data-reveal="side">
         <span className="section-index">{index}</span>
         <div>
           <h2>{title}</h2>
           <p>{ko}</p>
         </div>
       </div>
-      <div className="section-body">{children}</div>
+      <div className="section-body" data-reveal="body">{children}</div>
     </section>
   );
 }

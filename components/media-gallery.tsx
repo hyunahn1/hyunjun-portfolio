@@ -12,7 +12,7 @@ export function MediaGallery({ items }: { items: Media[] }) {
   return (
     <div className="media-grid">
       {items.map((item) => (
-        <figure key={item.src} className="media-figure">
+        <figure key={item.src} className="media-figure" data-reveal="media">
           <div
             className={`media-frame ${item.portrait ? "is-portrait" : ""}`}
           >

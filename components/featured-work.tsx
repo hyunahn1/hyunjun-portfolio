@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import type { Project } from "@/content/portfolio";
 
 export function FeaturedWork({ projects }: { projects: Project[] }) {
@@ -6,7 +7,7 @@ export function FeaturedWork({ projects }: { projects: Project[] }) {
 
   return (
     <section className="featured-work" aria-labelledby="featured-title">
-      <div className="featured-heading">
+      <div className="featured-heading" data-reveal="heading">
         <p>Selected systems</p>
         <h2 id="featured-title">데이터에서 운영까지.</h2>
         <span>
@@ -26,6 +27,8 @@ export function FeaturedWork({ projects }: { projects: Project[] }) {
               key={project.code}
               href={`#project-${project.code.toLowerCase()}`}
               className={`featured-card featured-card-${index + 1}`}
+              data-reveal="media"
+              style={{ "--reveal-delay": `${index * 90}ms` } as CSSProperties}
             >
               <div className="featured-media">
                 {image && image.type === "image" && (
