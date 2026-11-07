@@ -49,7 +49,7 @@ export function IntroLoader() {
         doneTimer = window.setTimeout(() => {
           setPhase("done");
           root.classList.remove("intro-lock");
-        }, 1350);
+        }, 1580);
       }, 180);
     };
 
@@ -77,6 +77,11 @@ export function IntroLoader() {
       aria-valuenow={count}
     >
       <div className="loader-aperture" aria-hidden />
+      <div className="loader-shockwaves" aria-hidden>
+        <i />
+        <i />
+        <i />
+      </div>
 
       <div className="loader-orbit" aria-hidden>
         <i />

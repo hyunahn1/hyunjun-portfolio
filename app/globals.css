@@ -737,38 +737,6 @@ body {
   background: #08111a;
 }
 
-.media-frame::after,
-.featured-media::before {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  inset: -35% 0 auto;
-  height: 24%;
-  opacity: 0;
-  background: linear-gradient(
-    180deg,
-    transparent,
-    rgba(129, 190, 230, 0.045) 40%,
-    rgba(214, 237, 250, 0.5) 50%,
-    rgba(255, 91, 52, 0.13) 53%,
-    transparent
-  );
-  transform: translateY(-100%);
-  pointer-events: none;
-}
-
-.motion-enabled .media-figure.is-in-view .media-frame::after,
-.motion-enabled .featured-card.is-in-view .featured-media::before {
-  animation: media-scan 1.35s cubic-bezier(0.22, 1, 0.36, 1) 360ms both;
-}
-
-@keyframes media-scan {
-  0% { opacity: 0; transform: translateY(-100%); }
-  16% { opacity: 0.9; }
-  76% { opacity: 0.45; }
-  100% { opacity: 0; transform: translateY(560%); }
-}
-
 .media-frame.is-portrait {
   aspect-ratio: 3 / 4;
 }
@@ -922,12 +890,45 @@ html.intro-lock body {
   top: 50%;
   width: 0;
   aspect-ratio: 1;
+  border: 1px solid rgba(201, 230, 247, 0.72);
   border-radius: 50%;
   background: transparent;
   box-shadow:
-    0 0 7rem 1.5rem rgba(28, 69, 98, 0.26),
+    0 0 2rem 0.15rem rgba(255, 91, 52, 0.58),
+    0 0 9rem 2rem rgba(62, 137, 187, 0.34),
     0 0 0 120vmax #020508;
   transform: translate(-50%, -50%);
+}
+
+.loader-shockwaves {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+}
+
+.loader-shockwaves i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(4.5rem, 14vmin, 9rem);
+  aspect-ratio: 1;
+  border: 1px solid rgba(202, 231, 248, 0.7);
+  border-radius: 50%;
+  box-shadow:
+    0 0 2.5rem rgba(76, 159, 211, 0.2),
+    inset 0 0 2rem rgba(255, 91, 52, 0.06);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.08);
+}
+
+.loader-shockwaves i:nth-child(2) {
+  border-color: rgba(255, 91, 52, 0.58);
+}
+
+.loader-shockwaves i:nth-child(3) {
+  border-style: dashed;
+  border-color: rgba(153, 207, 239, 0.4);
 }
 
 .loader-topline {
@@ -1055,7 +1056,19 @@ html.intro-lock body {
 }
 
 .intro-loader.is-exiting .loader-aperture {
-  animation: loader-aperture-open 1.3s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  animation: loader-aperture-open 1.52s cubic-bezier(0.62, 0, 0.18, 1) forwards;
+}
+
+.intro-loader.is-exiting .loader-shockwaves i {
+  animation: loader-shockwave 1.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.intro-loader.is-exiting .loader-shockwaves i:nth-child(2) {
+  animation-delay: 90ms;
+}
+
+.intro-loader.is-exiting .loader-shockwaves i:nth-child(3) {
+  animation-delay: 180ms;
 }
 
 .intro-loader.is-exiting::before,
@@ -1066,15 +1079,15 @@ html.intro-lock body {
 }
 
 .intro-loader.is-exiting .loader-count {
-  animation: loader-count-dissolve 820ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: loader-count-dissolve 760ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .intro-loader.is-exiting .loader-orbit {
-  animation: loader-orbit-release 1.12s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: loader-orbit-release 1.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .intro-loader.is-exiting .loader-core {
-  animation: loader-core-release 980ms ease-out forwards;
+  animation: loader-core-release 1.12s ease-out forwards;
 }
 
 @keyframes loader-orbit {
@@ -1087,8 +1100,17 @@ html.intro-lock body {
 
 @keyframes loader-aperture-open {
   0% { width: 0; }
-  18% { width: 2.5rem; }
+  12% { width: 5rem; }
+  38% { width: 46vmax; }
+  68% { width: 118vmax; }
   100% { width: 250vmax; }
+}
+
+@keyframes loader-shockwave {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.08); }
+  9% { opacity: 0.95; }
+  42% { opacity: 0.58; }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(15); filter: blur(1px); }
 }
 
 @keyframes loader-interface-out {
@@ -1096,16 +1118,16 @@ html.intro-lock body {
 }
 
 @keyframes loader-count-dissolve {
-  to { transform: translate(-50%, -52%) scale(1.16); opacity: 0; filter: blur(8px); }
+  to { transform: translate(-50%, -52%) scale(1.34); opacity: 0; filter: blur(12px); }
 }
 
 @keyframes loader-orbit-release {
-  to { transform: translate(-50%, -50%) scale(1.55) rotate(18deg); opacity: 0; }
+  to { transform: translate(-50%, -50%) scale(2.25) rotate(28deg); opacity: 0; }
 }
 
 @keyframes loader-core-release {
-  42% { transform: translate(-50%, -50%) scale(7); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(18); opacity: 0; }
+  28% { transform: translate(-50%, -50%) scale(14); opacity: 1; background: #f5fbff; }
+  100% { transform: translate(-50%, -50%) scale(58); opacity: 0; }
 }
 
 /* The hero waits for the loading portal before drawing its type. */
@@ -1169,8 +1191,16 @@ html.intro-lock body {
 }
 
 @keyframes hero-portal-zoom {
-  from { opacity: 0.32; transform: scale(1.24); filter: blur(9px); }
-  to { opacity: 0.78; transform: scale(1.035); filter: blur(0); }
+  from {
+    opacity: 0.18;
+    transform: scale(1.48);
+    filter: blur(18px) brightness(0.48) saturate(0.65);
+  }
+  to {
+    opacity: 0.78;
+    transform: scale(1.035);
+    filter: blur(0) brightness(1) saturate(1);
+  }
 }
 
 .scroll-telemetry {
@@ -1454,13 +1484,12 @@ html.intro-lock body {
     transition: none;
   }
   .loader-orbit i,
-  .loader-topline span:last-child::before {
+  .loader-topline span:last-child::before,
+  .loader-shockwaves i {
     animation: none;
   }
   .section-watermark-track,
-  .project-block::after,
-  .media-frame::after,
-  .featured-media::before {
+  .project-block::after {
     animation: none;
   }
   .trace path {
