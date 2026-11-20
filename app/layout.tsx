@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 const plexMono = IBM_Plex_Mono({
@@ -8,14 +9,22 @@ const plexMono = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
 });
 
+const wantedSans = localFont({
+  src: "./fonts/WantedSansVariable.woff2",
+  variable: "--font-wanted-sans",
+  weight: "400 1000",
+  display: "swap",
+});
+
+const description =
+  "역사학을 전공하고 42에서 시스템 프로그래밍을 공부한 AI 엔지니어 안현준의 포트폴리오입니다.";
+
 export const metadata: Metadata = {
   title: "안현준 | AI / ML Engineer",
-  description:
-    "LLM 증류·수요 예측 모델을 설계부터 운영까지 만드는 AI 엔지니어 안현준의 포트폴리오입니다.",
+  description,
   openGraph: {
     title: "안현준 | AI / ML Engineer",
-    description:
-      "LLM 증류·수요 예측 모델을 설계부터 운영까지 만드는 AI 엔지니어 안현준의 포트폴리오입니다.",
+    description,
     locale: "ko_KR",
     type: "website",
   },
@@ -23,18 +32,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ko" className={`${plexMono.variable} h-full antialiased`}>
-      <head>
-        <link
-          rel="preconnect"
-          href="https://cdn.jsdelivr.net"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
-        />
-      </head>
+    <html lang="ko" className={`${wantedSans.variable} ${plexMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

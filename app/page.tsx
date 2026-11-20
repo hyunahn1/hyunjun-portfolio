@@ -49,10 +49,10 @@ export default function Home() {
               {profile.role} · {profile.nameEn}
             </p>
 
-            <h1 className="hero-title">
+            <h1 className="hero-title" lang="en" aria-label={profile.headline.join(" ")}>
               {profile.headline.map((line) => (
                 <span key={line} className="hero-line">
-                  <span className="hero-line-inner">{line}</span>
+                  <span className="hero-line-inner">{line}{" "}</span>
                 </span>
               ))}
             </h1>
@@ -60,23 +60,14 @@ export default function Home() {
             <div className="hero-lower">
               <p className="hero-intro">{profile.heroIntro}</p>
               <div className="hero-actions">
-                <a href="#projects" className="hero-action-primary">
-                  프로젝트 보기
+                <a href="#about" className="hero-action-primary">
+                  제 이야기 보기
                 </a>
-                <a href="mailto:ahnhj99999@gmail.com" className="hero-action-secondary">
-                  이메일 보내기
+                <a href="#projects" className="hero-action-secondary">
+                  프로젝트 보기
                 </a>
               </div>
             </div>
-
-            <dl className="hero-metrics">
-              {profile.metrics.map((metric) => (
-                <div key={metric.label}>
-                  <dt>{metric.label}</dt>
-                  <dd>{metric.value}</dd>
-                </div>
-              ))}
-            </dl>
 
             <a href="#selected" className="hero-scroll" aria-label="대표 작업으로 이동">
               <span>Scroll to explore</span>

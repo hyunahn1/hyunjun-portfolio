@@ -8,7 +8,7 @@
   --color-line: #24313d;
   --color-signal: #ff5b34;
 
-  --font-sans: "Pretendard Variable", Pretendard, ui-sans-serif, system-ui,
+  --font-sans: var(--font-wanted-sans), ui-sans-serif, system-ui,
     "Apple SD Gothic Neo", sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
 }
@@ -227,6 +227,7 @@ body {
   padding: clamp(7rem, 14vh, 10rem) clamp(1.25rem, 4vw, 3.5rem) clamp(2rem, 5vh, 3.5rem);
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .hero-kicker {
@@ -254,7 +255,7 @@ body {
   max-width: none;
   font-size: clamp(3.7rem, 8.3vw, 8rem);
   font-weight: 760;
-  line-height: 0.91;
+  line-height: 1.02;
   letter-spacing: -0.065em;
   word-break: keep-all;
 }
@@ -326,34 +327,6 @@ body {
 
 .hero-action-secondary:hover {
   border-color: #edf3f7;
-}
-
-.hero-metrics {
-  margin-top: auto;
-  width: min(100%, 860px);
-  padding-top: clamp(2.5rem, 8vh, 5.5rem);
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1px solid rgba(219, 231, 240, 0.22);
-  animation: hero-rise 800ms ease 640ms both;
-}
-
-.hero-metrics div {
-  padding-right: 1.5rem;
-}
-
-.hero-metrics dt {
-  margin-bottom: 0.4rem;
-  font-family: var(--font-mono);
-  font-size: 0.63rem;
-  letter-spacing: 0.08em;
-  color: rgba(237, 243, 247, 0.48);
-}
-
-.hero-metrics dd {
-  font-family: var(--font-mono);
-  font-size: clamp(0.78rem, 1.2vw, 0.95rem);
-  color: rgba(237, 243, 247, 0.9);
 }
 
 .hero-scroll {
@@ -776,7 +749,6 @@ body {
   .site-nav { display: none; }
   .site-contact { margin-left: auto; }
   .hero-lower { grid-template-columns: 1fr; align-items: start; }
-  .hero-metrics { width: calc(100% - 4rem); }
   .featured-heading { grid-template-columns: 1fr; gap: 1rem; }
   .featured-heading h2 { max-width: 11ch; }
   .featured-grid { grid-template-columns: 1fr; }
@@ -797,14 +769,10 @@ body {
       linear-gradient(0deg, rgba(3, 9, 16, 0.92) 0%, transparent 55%);
   }
   .hero-art { object-position: 62% center; opacity: 0.65; }
-  .hero-title { font-size: clamp(3.25rem, 16.5vw, 5.2rem); }
+  .hero-title { font-size: clamp(1.65rem, 10.4vw, 4.25rem); }
   .hero-intro { max-width: 34ch; }
   .hero-actions { gap: 0.6rem; }
   .hero-actions a { padding: 0.75rem 0.78rem; font-size: 0.76rem; }
-  .hero-metrics { width: calc(100% - 1rem); gap: 0.75rem; }
-  .hero-metrics div { padding-right: 0; }
-  .hero-metrics dt { font-size: 0.56rem; }
-  .hero-metrics dd { font-size: 0.68rem; }
   .hero-scroll { display: none; }
   .featured-work { padding-block: 6rem; }
   .featured-card-1 .featured-media,
@@ -1157,8 +1125,7 @@ html.intro-lock body {
 }
 
 .hero-kicker,
-.hero-lower,
-.hero-metrics {
+.hero-lower {
   opacity: 0;
   transform: translateY(1.2rem);
   animation: none;
@@ -1172,20 +1139,12 @@ html.intro-lock body {
   animation-delay: 100ms;
 }
 
-.intro-ready .hero-title .hero-line:nth-child(3) .hero-line-inner {
-  animation-delay: 200ms;
-}
-
 .intro-ready .hero-kicker {
   animation: hero-support-in 700ms ease 180ms forwards;
 }
 
 .intro-ready .hero-lower {
   animation: hero-support-in 760ms ease 460ms forwards;
-}
-
-.intro-ready .hero-metrics {
-  animation: hero-support-in 760ms ease 620ms forwards;
 }
 
 .intro-ready .hero-art {
@@ -1389,12 +1348,6 @@ html.intro-lock body {
   .loader-topline span:last-child::before { margin-right: 0; }
   .loader-footer { grid-template-columns: 1fr 2.8rem; }
   .loader-footer > span:first-child { display: none; }
-  .hero-title {
-    max-width: none;
-    font-size: clamp(2.25rem, 11.2vw, 4.6rem);
-    line-height: 0.88;
-    letter-spacing: -0.06em;
-  }
 }
 
 /* --- 인쇄(PDF) 전용 --------------------------------------------------- */
@@ -1470,7 +1423,6 @@ html.intro-lock body {
   .hero-kicker,
   .hero-title span,
   .hero-lower,
-  .hero-metrics,
   .hero-scroll i {
     animation: none;
   }
@@ -1481,7 +1433,6 @@ html.intro-lock body {
   .hero-title .hero-line-inner,
   .hero-kicker,
   .hero-lower,
-  .hero-metrics,
   .motion-enabled [data-reveal],
   .motion-enabled [data-reveal="media"] .featured-image,
   .motion-enabled [data-reveal="media"] .media-object {
