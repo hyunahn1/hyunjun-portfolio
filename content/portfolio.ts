@@ -310,7 +310,7 @@ export const projects: Project[] = [
   },
   {
     code: "PRJ-04",
-    org: "만월회 · 모바일 앱 · 2026.09 — 2026.10 · 스토어 출시",
+    org: "만월회 · 모바일 앱 · 2026.09 — 출시·운영 중",
     title: "디저트맵 — 유행 디저트 판매처 지도 앱",
     titleEn: "Dessert Map — Finding Where Trending Desserts Are Sold",
     overview:
@@ -641,8 +641,9 @@ const mainCodes = ["PRJ-05", "PRJ-01", "PRJ-03"];
 export const mainProjects = mainCodes.map(
   (code) => projects.find((project) => project.code === code)!,
 );
+// PRJ-08(Kubernetes GitOps)은 내용만 남겨 두고 사이트와 PDF에서는 숨긴다.
 export const otherProjects = projects.filter(
-  (project) => !mainCodes.includes(project.code),
+  (project) => !mainCodes.includes(project.code) && project.code !== "PRJ-08",
 );
 
 export type Course = {
@@ -921,7 +922,7 @@ export const education: Education[] = [
   {
     school: "42 Wolfsburg — SEA:ME",
     detail: "Automotive Embedded AI · 폭스바겐코리아 후원",
-    period: "2026.01 — 현재",
+    period: "2026.01 — 2026.08",
   },
   {
     school: "42 Gyeongsan — Common Core",
@@ -1049,7 +1050,7 @@ export const cv = {
     {
       title: "Dessert Map — Store Finder App for Trending Desserts · Manwol",
       sub: "Flutter, Python, Firebase Functions, Firestore, FastAPI, PostgreSQL, Naver / Kakao APIs",
-      period: "Sep 2026 – Oct 2026",
+      period: "Sep 2026 – Present",
       bullets: [
         "Solo-built and shipped an iOS / Android app that maps where trending desserts are sold; a daily collector across 17 provinces creates stores only from verified place results and confirms sales with 2+ matching posts",
       ],
@@ -1087,7 +1088,7 @@ export const cv = {
     {
       title: "42 Wolfsburg – SEA:ME Program",
       sub: "Automotive Embedded AI · Sponsored by Volkswagen Korea",
-      period: "Jan 2026 – Present",
+      period: "Jan 2026 – Aug 2026",
     },
     {
       title: "42 Gyeongsan Common Core",
@@ -1199,7 +1200,7 @@ export const cvKo: Cv = {
     {
       title: "디저트맵 — 유행 디저트 판매처 지도 앱 · 만월회",
       sub: "Flutter, Python, Firebase Functions, Firestore, FastAPI, PostgreSQL, Naver / Kakao APIs",
-      period: "2026.09 – 2026.10",
+      period: "2026.09 – 현재",
       bullets: [
         "iOS·Android 앱을 1인 개발해 출시. 전국 17개 시·도를 매일 수집하고, 검증된 장소 결과로만 매장을 만들며 일치하는 글이 2건 이상일 때 판매처로 확정",
       ],
@@ -1233,7 +1234,7 @@ export const cvKo: Cv = {
   ],
   education: [
     { title: "한국방송통신대학교 PRIME College", sub: "인공지능 전공 (B.S.)", period: "2026.03 – 현재" },
-    { title: "42 Wolfsburg – SEA:ME", sub: "Automotive Embedded AI · 폭스바겐코리아 후원", period: "2026.01 – 현재" },
+    { title: "42 Wolfsburg – SEA:ME", sub: "Automotive Embedded AI · 폭스바겐코리아 후원", period: "2026.01 – 2026.08" },
     { title: "42 Gyeongsan Common Core", sub: "C, C++, Unix, 알고리즘, 시스템 프로그래밍", period: "2024.01 – 2026.01" },
     { title: "영남대학교", sub: "역사학 전공 (B.A.)", period: "2018.03 – 2024.02" },
   ],
