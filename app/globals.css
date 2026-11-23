@@ -118,6 +118,7 @@ body {
 }
 
 .site-nav a,
+.site-resume,
 .site-contact {
   position: relative;
   font-size: 1rem;
@@ -140,6 +141,20 @@ body {
 .site-nav a.is-active::after {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+.site-resume {
+  padding: calc(0.55rem - 1px) 1.1rem;
+  border: 1px solid #fff;
+  border-radius: 999px;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.site-resume:hover {
+  background: #fff;
+  color: var(--color-paper);
 }
 
 .site-contact {
@@ -1012,7 +1027,8 @@ body {
 
 @media (max-width: 900px) {
   .site-nav { display: none; }
-  .site-contact { margin-left: auto; }
+  .site-resume { margin-left: auto; }
+  .site-header-inner { gap: 0.6rem; }
   .hero-lower { grid-template-columns: 1fr; align-items: start; }
   .content-section { grid-template-columns: 1fr; gap: 2rem; }
   .section-title { position: static; }

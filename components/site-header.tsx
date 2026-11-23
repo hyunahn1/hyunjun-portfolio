@@ -58,6 +58,15 @@ export function SiteHeader() {
           ))}
         </nav>
 
+        <a
+          href="/CV_Hyunjun_KR.pdf"
+          target="_blank"
+          rel="noreferrer"
+          className="site-resume"
+        >
+          이력서
+        </a>
+
         <a href="mailto:ahnhj99999@gmail.com" className="site-contact">
           연락하기
         </a>
