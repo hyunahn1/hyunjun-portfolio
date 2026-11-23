@@ -238,11 +238,11 @@ export const projects: Project[] = [
   },
   {
     code: "PRJ-03",
-    org: "42 Wolfsburg · Applied Deep Learning",
+    org: "42 Wolfsburg · Applied Deep Learning · 2026.03 — 2026.06",
     title: "아우토반 트럭 주차공간 예측",
     titleEn: "Autobahn Truck Parking Availability Prediction",
     overview:
-      "트럭 운전자가 도착할 시점의 주차 가능 여부를 예측해, 운행·휴식 시간 규정 안에서 안전하게 정차할 지점을 고를 수 있도록 돕는 서비스입니다. (진행 중)",
+      "트럭 운전자가 도착할 시점의 주차 가능 여부를 예측해, 운행·휴식 시간 규정 안에서 안전하게 정차할 지점을 고를 수 있도록 돕는 서비스입니다.",
     spec: [
       {
         label: "Problem",
@@ -310,7 +310,7 @@ export const projects: Project[] = [
   },
   {
     code: "PRJ-04",
-    org: "만월회 · 모바일 앱 · 2026.09 — 출시·운영 중",
+    org: "만월회 · 모바일 앱 · 2026.09 — 2026.10 · 스토어 출시",
     title: "디저트맵 — 유행 디저트 판매처 지도 앱",
     titleEn: "Dessert Map — Finding Where Trending Desserts Are Sold",
     overview:
@@ -493,7 +493,7 @@ export const projects: Project[] = [
   },
   {
     code: "PRJ-06",
-    org: "42 Wolfsburg · SEA:ME Capstone",
+    org: "42 Wolfsburg · SEA:ME Capstone · 2026.02 — 2026.05",
     title: "통합 디지털 콕핏",
     titleEn: "Integrated Digital Cockpit",
     overview:
@@ -569,7 +569,7 @@ export const projects: Project[] = [
   },
   {
     code: "PRJ-07",
-    org: "42 Network · System Administration",
+    org: "42 Network · System Administration · 2025.06 — 2025.07",
     title: "컨테이너 기반 웹 인프라",
     titleEn: "ContainerWeb — Containerized Web Infrastructure",
     overview:
@@ -1018,7 +1018,7 @@ export const cv = {
     {
       title: "Trend Radar — Early Detection of Emerging F&B Trends · Manwol",
       sub: "Python, Qwen3-4B, LoRA SFT, Knowledge Distillation, vLLM, scikit-learn, Prometheus, Grafana",
-      period: "2026 – Present",
+      period: "Sep 2026 – Present",
       bullets: [
         "Built a daily pipeline over ~150K collected posts from 6 sources (Naver blog/café, Instagram, YouTube in ko/en/ja/zh, communities), extracting newly appearing food names with a local LLM and tracking their search curves to flag trends before they go mainstream",
         "Distilled Qwen3-4B from teacher-model labels with rationales (Distilling Step-by-Step, LoRA SFT); the 7.5× smaller model beats a 30B general model on all 6 judgment attributes (food F1 0.905 → 0.947, café-fit F1 0.846 → 0.942) and lifts extraction F1 0.654 → 0.747",
@@ -1029,7 +1029,7 @@ export const cv = {
     {
       title: "Autobahn Truck Parking Availability Prediction · Applied Deep Learning",
       sub: "Python, PyTorch, LightGBM, Kubernetes, TimescaleDB, Feast, Redis, Grafana, Flutter",
-      period: "2026 – Present",
+      period: "Mar 2026 – Jun 2026",
       bullets: [
         "Collected and preprocessed ~160K Toll Collect SID records and analyzed spatiotemporal demand by rest area",
         "Compared LightGBM and deep models against a seasonal baseline to verify when a model actually beats the baseline",
@@ -1039,7 +1039,7 @@ export const cv = {
     {
       title: "Reorder Forecasting — Predicting When Stores Buy Again · Manwol",
       sub: "Python, XGBoost, TabPFN, Pandas, BigQuery, Cloud Run Jobs, Firestore, Cloud Functions, Grafana",
-      period: "2026 – Present",
+      period: "Sep 2026 – Present",
       bullets: [
         "Predicts per store × item reorder date and quantity so the app can push restock alerts and pre-filled carts; runs daily as a Cloud Run Job → Firestore → Cloud Functions pipeline",
         "XGBoost cut reorder-date MAE by 34% (8.44 → 5.56 days) under 12-fold monthly walk-forward validation with all features recomputed as of prediction time to prevent leakage",
@@ -1049,7 +1049,7 @@ export const cv = {
     {
       title: "Dessert Map — Store Finder App for Trending Desserts · Manwol",
       sub: "Flutter, Python, Firebase Functions, Firestore, FastAPI, PostgreSQL, Naver / Kakao APIs",
-      period: "2026 – Present",
+      period: "Sep 2026 – Oct 2026",
       bullets: [
         "Solo-built and shipped an iOS / Android app that maps where trending desserts are sold; a daily collector across 17 provinces creates stores only from verified place results and confirms sales with 2+ matching posts",
       ],
@@ -1057,7 +1057,7 @@ export const cv = {
     {
       title: "Integrated Digital Cockpit · SEA:ME Capstone",
       sub: "Xen Hypervisor, Yocto / BitBake, Raspberry Pi 4, Qt / QML, CAN Bus",
-      period: "2026",
+      period: "Feb 2026 – May 2026",
       bullets: [
         "Built a mixed-criticality cockpit on a Raspberry Pi 4 with Xen Dom0 / DomU separation, integrating a digital cluster, Qt head unit, and ultrasonic parking distance control into a custom Yocto image, validated on an RC car",
       ],
@@ -1168,7 +1168,7 @@ export const cvKo: Cv = {
     {
       title: "트렌드 레이더 — F&B 신규 트렌드 조기 탐지 · 만월회",
       sub: "Python, Qwen3-4B, LoRA SFT, Knowledge Distillation, vLLM, scikit-learn, Prometheus, Grafana",
-      period: "2026 – 현재",
+      period: "2026.09 – 현재",
       bullets: [
         "네이버 블로그·카페, Instagram, YouTube(한·영·일·중), 커뮤니티 등 6개 소스의 글 약 15만 건을 다루는 일일 파이프라인을 구축하고, 로컬 LLM으로 새 음식 이름을 뽑아 검색 곡선으로 유행 조짐 탐지",
         "교사 모델의 라벨과 판단 이유로 Qwen3-4B를 증류(Distilling Step-by-Step, LoRA SFT). 7.5배 작은 모델이 30B 범용 모델을 판정 6개 속성 모두에서 앞섬(음식 F1 0.905 → 0.947, 카페 적합 F1 0.846 → 0.942), 추출 F1 0.654 → 0.747",
@@ -1179,7 +1179,7 @@ export const cvKo: Cv = {
     {
       title: "아우토반 트럭 주차공간 예측 · Applied Deep Learning",
       sub: "Python, PyTorch, LightGBM, Kubernetes, TimescaleDB, Feast, Redis, Grafana, Flutter",
-      period: "2026 – 현재",
+      period: "2026.03 – 2026.06",
       bullets: [
         "독일 Toll Collect SID 통행 데이터 약 16만 건을 수집·전처리하고 휴게소별 시공간 수요 패턴 분석",
         "LightGBM과 딥러닝 모델을 계절성 기준값과 비교해 어떤 조건에서 모델이 실제로 나은지 검증",
@@ -1189,7 +1189,7 @@ export const cvKo: Cv = {
     {
       title: "재구매 시점 예측 · 만월회",
       sub: "Python, XGBoost, TabPFN, Pandas, BigQuery, Cloud Run Jobs, Firestore, Cloud Functions, Grafana",
-      period: "2026 – 현재",
+      period: "2026.09 – 현재",
       bullets: [
         "매장×품목별 재구매 시점과 수량을 예측해 앱 알림과 장바구니 제안으로 연결. Cloud Run Job → Firestore → Cloud Functions로 매일 실행",
         "월별 12구간 워크포워드 검증에서 XGBoost로 재구매 시점 MAE 34% 개선(8.44 → 5.56일). 모든 피처를 예측 시점 기준으로 다시 계산해 데이터 누수 차단",
@@ -1199,7 +1199,7 @@ export const cvKo: Cv = {
     {
       title: "디저트맵 — 유행 디저트 판매처 지도 앱 · 만월회",
       sub: "Flutter, Python, Firebase Functions, Firestore, FastAPI, PostgreSQL, Naver / Kakao APIs",
-      period: "2026 – 현재",
+      period: "2026.09 – 2026.10",
       bullets: [
         "iOS·Android 앱을 1인 개발해 출시. 전국 17개 시·도를 매일 수집하고, 검증된 장소 결과로만 매장을 만들며 일치하는 글이 2건 이상일 때 판매처로 확정",
       ],
@@ -1207,7 +1207,7 @@ export const cvKo: Cv = {
     {
       title: "통합 디지털 콕핏 · SEA:ME Capstone",
       sub: "Xen Hypervisor, Yocto / BitBake, Raspberry Pi 4, Qt / QML, CAN Bus",
-      period: "2026",
+      period: "2026.02 – 2026.05",
       bullets: [
         "Raspberry Pi 4에서 Xen Dom0 / DomU로 도메인을 나누고 디지털 클러스터, Qt 헤드 유닛, 초음파 주차 보조를 커스텀 Yocto 이미지로 통합해 RC카에서 검증",
       ],
