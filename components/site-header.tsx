@@ -42,10 +42,7 @@ export function SiteHeader() {
     <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
       <div className="site-header-inner">
         <a href="#top" className="site-brand">
-          <span className="font-mono text-sm font-semibold tracking-tight">
-            {profile.name}
-          </span>
-          <span className="site-brand-en">{profile.nameEn}</span>
+          {profile.name}
         </a>
 
         <nav aria-label="섹션" className="site-nav">
@@ -56,13 +53,13 @@ export function SiteHeader() {
               aria-current={active === s.id ? "true" : undefined}
               className={active === s.id ? "is-active" : undefined}
             >
-              {s.title}
+              {s.ko}
             </a>
           ))}
         </nav>
 
         <a href="mailto:ahnhj99999@gmail.com" className="site-contact">
-          Let&apos;s talk
+          연락하기
         </a>
       </div>
     </header>

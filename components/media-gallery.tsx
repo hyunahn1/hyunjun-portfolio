@@ -38,7 +38,6 @@ export function MediaGallery({ items }: { items: Media[] }) {
             )}
           </div>
           <figcaption className="media-caption">
-            {item.type === "video" && <span className="text-signal">▶ </span>}
             {item.caption}
           </figcaption>
         </figure>

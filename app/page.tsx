@@ -5,6 +5,7 @@ import { IntroLoader } from "@/components/intro-loader";
 import { MediaGallery } from "@/components/media-gallery";
 import { ProjectBlock } from "@/components/project-block";
 import { ScrollMotion } from "@/components/scroll-motion";
+import { ScrollStatement } from "@/components/scroll-statement";
 import { Section } from "@/components/section";
 import { SiteHeader } from "@/components/site-header";
 import {
@@ -31,85 +32,68 @@ export default function Home() {
       <SiteHeader />
 
       <main id="top" className="flex-1">
-        <section className="hero-shell">
-          <Image
-            src="/media/hero-signal-field.png"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="hero-art"
-          />
-          <HeroScene />
-          <div className="hero-shade" aria-hidden />
+        <div className="hero-pin" data-pin>
+          <section className="hero-shell">
+            <Image
+              src="/media/hero-signal-field.png"
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="hero-art"
+            />
+            <HeroScene />
+            <div className="hero-shade" aria-hidden />
 
-          <div className="hero-inner">
-            <p className="hero-kicker">
-              <span className="hero-live" aria-hidden />
-              {profile.role} · {profile.nameEn}
-            </p>
+            <div className="hero-inner">
+              <h1 className="hero-title" lang="en" aria-label={profile.headline.join(" ")}>
+                {profile.headline.map((line) => (
+                  <span key={line} className="hero-line">
+                    <span className="hero-line-inner">{line}{" "}</span>
+                  </span>
+                ))}
+              </h1>
 
-            <h1 className="hero-title" lang="en" aria-label={profile.headline.join(" ")}>
-              {profile.headline.map((line) => (
-                <span key={line} className="hero-line">
-                  <span className="hero-line-inner">{line}{" "}</span>
-                </span>
-              ))}
-            </h1>
-
-            <div className="hero-lower">
-              <p className="hero-intro">{profile.heroIntro}</p>
-              <div className="hero-actions">
-                <a href="#about" className="hero-action-primary">
-                  제 이야기 보기
-                </a>
-                <a href="#projects" className="hero-action-secondary">
-                  프로젝트 보기
-                </a>
+              <div className="hero-lower">
+                <p className="hero-intro">{profile.heroIntro}</p>
+                <div className="hero-actions">
+                  <a href="#about" className="hero-action-primary">
+                    제 이야기 보기
+                  </a>
+                  <a href="#projects" className="hero-action-secondary">
+                    프로젝트 보기
+                  </a>
+                </div>
               </div>
             </div>
+          </section>
+        </div>
 
-            <a href="#selected" className="hero-scroll" aria-label="대표 작업으로 이동">
-              <span>Scroll to explore</span>
-              <i aria-hidden />
-            </a>
-          </div>
-        </section>
+        <ScrollStatement text={profile.statement} />
+        <FeaturedWork projects={projects} />
 
-        <div id="selected" className="site-content">
-          <FeaturedWork projects={projects} />
+        <div className="site-content">
+          <Section {...section.projects}>
+            <div className="space-y-20">
+              {projects.map((project) => (
+                <ProjectBlock key={project.code} project={project} />
+              ))}
+            </div>
+          </Section>
 
-        {/* --- 01 Projects ----------------------------------------------- */}
-        <Section {...section.projects}>
-          <div className="space-y-20">
-            {projects.map((project) => (
-              <ProjectBlock key={project.code} project={project} />
-            ))}
-          </div>
-        </Section>
-
-
-        {/* --- 02 Experience --------------------------------------------- */}
-        <Section {...section.experience}>
-          <div>
+          <Section {...section.experience}>
             {experience.map((job) => (
-              <div
-                key={job.org}
-                className="grid gap-x-8 gap-y-3 border-t border-line py-7 md:grid-cols-[11rem_1fr]"
-              >
-                <div className="label pt-1">{job.period}</div>
+              <div key={job.org} className="entry" data-reveal="body">
+                <div className="entry-key">{job.period}</div>
                 <div>
-                  <h3 className="text-lg font-bold tracking-tight">{job.org}</h3>
-                  <p className="mt-0.5 font-mono text-sm text-muted">
+                  <h3 className="entry-title">{job.org}</h3>
+                  <p className="entry-sub">
                     {job.program}
-                    {job.location && ` · ${job.location}`}
+                    {job.location && `, ${job.location}`}
                   </p>
-                  <ul className="mt-4 space-y-1.5">
+                  <ul className="mt-4 space-y-2">
                     {job.bullets.map((line) => (
-                      <li
-                        key={line}
-                        className="prose-ko flex gap-2.5 text-[0.9375rem] text-ink/85"
-                      >
+                      <li key={line} className="prose-ko flex gap-3 text-[1.0625rem]">
                         <span aria-hidden className="mark" />
                         <span>{line}</span>
                       </li>
@@ -118,54 +102,29 @@ export default function Home() {
                 </div>
               </div>
             ))}
-          </div>
-        </Section>
+          </Section>
 
-
-        {/* --- 03 Skills -------------------------------------------------- */}
-        <Section {...section.skills}>
-          <div>
+          <Section {...section.skills}>
             {skills.map((group) => (
-              <div
-                key={group.group}
-                className="grid gap-x-8 gap-y-3 border-t border-line py-6 md:grid-cols-[11rem_1fr]"
-              >
-                <div className="label pt-1">{group.group}</div>
-                <ul className="flex flex-wrap gap-x-5 gap-y-2">
-                  {group.items.map((item) => (
-                    <li key={item} className="font-mono text-sm text-ink/85">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+              <div key={group.group} className="entry" data-reveal="body">
+                <div className="entry-key">{group.group}</div>
+                <p className="prose-ko text-[1.0625rem]">{group.items.join(", ")}</p>
               </div>
             ))}
-          </div>
-        </Section>
+          </Section>
 
-
-        {/* --- 04 Awards -------------------------------------------------- */}
-        <Section {...section.awards}>
-          <div>
+          <Section {...section.awards}>
             {awards.map((award) => (
-              <div
-                key={award.title + award.event}
-                className="grid gap-x-8 gap-y-3 border-t border-line py-7 md:grid-cols-[11rem_1fr]"
-              >
-                <div className="label pt-1">{award.period}</div>
+              <div key={award.title + award.event} className="entry" data-reveal="body">
+                <div className="entry-key">{award.period}</div>
                 <div>
-                  <h3 className="text-lg font-bold tracking-tight">
-                    {award.title}
-                    <span className="text-muted"> · </span>
-                    <span className="font-medium">{award.event}</span>
+                  <h3 className="entry-title">
+                    {award.title}, {award.event}
                   </h3>
-                  <p className="mt-0.5 font-mono text-sm text-muted">{award.org}</p>
-                  <ul className="mt-4 space-y-1.5">
+                  <p className="entry-sub">{award.org}</p>
+                  <ul className="mt-4 space-y-2">
                     {award.bullets.map((line) => (
-                      <li
-                        key={line}
-                        className="prose-ko flex gap-2.5 text-[0.9375rem] text-ink/85"
-                      >
+                      <li key={line} className="prose-ko flex gap-3 text-[1.0625rem]">
                         <span aria-hidden className="mark" />
                         <span>{line}</span>
                       </li>
@@ -179,132 +138,96 @@ export default function Home() {
                 </div>
               </div>
             ))}
-          </div>
-        </Section>
+          </Section>
 
+          <Section {...section.curriculum}>
+            <p className="prose-ko max-w-[62ch] text-[1.1875rem]" data-reveal="body">
+              {curriculumIntro}
+            </p>
 
-        {/* --- 05 42 Cursus ------------------------------------------------ */}
-        <Section {...section.curriculum}>
-          <p className="prose-ko max-w-[62ch] text-[1.0625rem] text-ink/85">
-            {curriculumIntro}
-          </p>
+            <a
+              href="https://github.com/hyunahn1"
+              target="_blank"
+              rel="noreferrer"
+              className="text-link mt-4 inline-block"
+            >
+              GitHub 저장소
+            </a>
 
-          <a
-            href="https://github.com/hyunahn1"
-            target="_blank"
-            rel="noreferrer"
-            className="mt-4 inline-flex items-center gap-1.5 font-mono text-xs font-medium text-signal underline decoration-signal/30 underline-offset-4 transition-colors hover:decoration-signal"
-          >
-            <span aria-hidden>→</span> GitHub 저장소
-          </a>
-
-          <div className="mt-10">
-            {curriculum.map((group) => (
-              <div key={group.group} className="border-t border-line py-8">
-                <div className="label">{group.group}</div>
-                <div className="mt-6 grid gap-x-10 gap-y-8 sm:grid-cols-2">
-                  {group.items.map((course) => (
-                    <div key={course.name} className="min-w-0">
-                      <h3 className="flex flex-wrap items-baseline gap-x-2.5">
-                        <span className="font-mono text-[0.9375rem] font-semibold tracking-tight">
+            <div className="mt-10">
+              {curriculum.map((group) => (
+                <div key={group.group} className="course-group">
+                  <h3 className="entry-title" data-reveal="row">
+                    {group.group}
+                  </h3>
+                  <div className="mt-6 grid gap-x-10 gap-y-9 sm:grid-cols-2">
+                    {group.items.map((course) => (
+                      <div key={course.name} className="min-w-0" data-reveal="body">
+                        <h4 className="course-name">
                           {course.name}
-                        </span>
-                        <span className="text-xs text-muted">{course.ko}</span>
-                      </h3>
-                      <p className="prose-ko mt-2 text-[0.9375rem] text-ink/85">
-                        {course.desc}
-                      </p>
-                      <ul className="mt-3 flex flex-wrap gap-1.5">
-                        {course.learned.map((tag) => (
-                          <li
-                            key={tag}
-                            className="rounded-sm bg-panel px-2 py-1 font-mono text-[0.6875rem] tracking-tight text-muted"
-                          >
-                            {tag}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
+                          <span>{course.ko}</span>
+                        </h4>
+                        <p className="prose-ko mt-2 text-[1.0625rem]">{course.desc}</p>
+                        <p className="course-learned">{course.learned.join(", ")}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </Section>
+              ))}
+            </div>
+          </Section>
 
-
-        {/* --- 06 Education ----------------------------------------------- */}
-        <Section {...section.education}>
-          <div>
+          <Section {...section.education}>
             {education.map((item) => (
-              <div
-                key={item.school}
-                className="grid gap-x-8 gap-y-1 border-t border-line py-6 md:grid-cols-[11rem_1fr]"
-              >
-                <div className="label pt-1">{item.period}</div>
-                <div className="flex flex-wrap items-baseline gap-x-3">
-                  <h3 className="font-bold tracking-tight">{item.school}</h3>
-                  <p className="text-sm text-muted">{item.detail}</p>
+              <div key={item.school} className="entry" data-reveal="body">
+                <div className="entry-key">{item.period}</div>
+                <div>
+                  <h3 className="entry-title">{item.school}</h3>
+                  <p className="entry-sub">{item.detail}</p>
                 </div>
               </div>
             ))}
-          </div>
-        </Section>
+          </Section>
 
+          <Section {...section.about}>
+            <div className="max-w-[62ch] space-y-6">
+              {about.map((para) => (
+                <p key={para} className="prose-ko text-[1.1875rem]" data-reveal="body">
+                  {para}
+                </p>
+              ))}
+            </div>
+          </Section>
 
-        {/* --- 07 About ---------------------------------------------------- */}
-        <Section {...section.about}>
-          <div className="max-w-[62ch] space-y-5">
-            {about.map((para) => (
-              <p key={para} className="prose-ko text-[1.0625rem] text-ink/85">
-                {para}
-              </p>
-            ))}
-          </div>
-        </Section>
-
-
-        {/* --- 08 Contact -------------------------------------------------- */}
-        <Section {...section.contact}>
-          <p className="display text-[clamp(1.75rem,4vw,2.5rem)]">
-            <span className="block">함께 만들 시스템이 있다면</span>
-            <span className="block">언제든 연락 주세요.</span>
-          </p>
-          <ul className="mt-10 border-b border-line">
-            {links.map((link) => (
-              <li key={link.label} className="border-t border-line">
-                <a
-                  href={link.href}
-                  target={link.href.startsWith("http") ? "_blank" : undefined}
-                  rel={link.href.startsWith("http") ? "noreferrer" : undefined}
-                  className="group flex items-baseline gap-4 py-4 md:gap-8"
-                >
-                  <span className="label w-[7rem] shrink-0 transition-colors group-hover:text-signal">
-                    {link.label}
-                  </span>
-                  <span className="break-all font-mono text-sm text-ink transition-colors group-hover:text-signal">
-                    {link.href.replace(/^mailto:|^https?:\/\//, "")}
-                  </span>
-                  <span
-                    aria-hidden
-                    className="ml-auto hidden font-mono text-sm text-line transition-colors group-hover:text-signal md:block"
+          <Section {...section.contact}>
+            <p className="display text-[clamp(2rem,4.4vw,3.25rem)]" data-reveal="title">
+              <span className="block">함께 만들 시스템이 있다면</span>
+              <span className="block">언제든 연락 주세요.</span>
+            </p>
+            <ul className="mt-10 border-b border-line">
+              {links.map((link) => (
+                <li key={link.label} className="border-t border-line">
+                  <a
+                    href={link.href}
+                    target={link.href.startsWith("http") ? "_blank" : undefined}
+                    rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+                    className="contact-link"
                   >
-                    →
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </Section>
+                    <span className="contact-key">{link.label}</span>
+                    <span className="break-all">
+                      {link.href.replace(/^mailto:|^https?:\/\//, "")}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </Section>
         </div>
       </main>
 
       <footer className="site-footer">
         <div className="site-footer-inner">
-          <span className="label">
-            © {new Date().getFullYear()} {profile.name} · {profile.nameEn}
-          </span>
-          <span className="label">Built with Next.js · Deployed on Vercel</span>
+          © {new Date().getFullYear()} {profile.name}
         </div>
       </footer>
     </>

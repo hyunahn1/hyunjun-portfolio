@@ -65,8 +65,6 @@ export function IntroLoader() {
 
   if (phase === "done") return null;
 
-  const formatted = String(count).padStart(3, "0");
-
   return (
     <div
       className={`intro-loader ${phase === "exiting" ? "is-exiting" : ""}`}
@@ -90,21 +88,8 @@ export function IntroLoader() {
         <i />
       </div>
 
-      <div className="loader-topline">
-        <span>AHN HYUNJUN</span>
-        <span>SYSTEM INITIALIZING</span>
-      </div>
-
-      <div className="loader-count" aria-live="polite">
-        {formatted}
-      </div>
-
-      <div className="loader-footer">
-        <span>LOADING OPERATING SYSTEMS</span>
-        <div className="loader-track">
-          <i style={{ transform: `scaleX(${count / 100})` }} />
-        </div>
-        <span>{formatted}%</span>
+      <div className="loader-count" aria-hidden>
+        {count}
       </div>
 
       <div className="loader-core" aria-hidden />

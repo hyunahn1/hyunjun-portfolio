@@ -7,12 +7,23 @@ const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
+  // 인쇄용 문서(/print, /cv)에서만 쓴다.
+  preload: false,
 });
 
-const wantedSans = localFont({
-  src: "./fonts/WantedSansVariable.woff2",
-  variable: "--font-wanted-sans",
-  weight: "400 1000",
+const suit = localFont({
+  src: "./fonts/SUIT-Variable.woff2",
+  variable: "--font-suit",
+  weight: "100 900",
+  display: "swap",
+});
+
+const paperlogy = localFont({
+  src: [
+    { path: "./fonts/Paperlogy-7Bold.woff2", weight: "700" },
+    { path: "./fonts/Paperlogy-8ExtraBold.woff2", weight: "800" },
+  ],
+  variable: "--font-paperlogy",
   display: "swap",
 });
 
@@ -32,7 +43,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ko" className={`${wantedSans.variable} ${plexMono.variable} h-full antialiased`}>
+    <html lang="ko" className={`${suit.variable} ${paperlogy.variable} ${plexMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
