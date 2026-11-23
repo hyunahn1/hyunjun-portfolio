@@ -20,6 +20,7 @@ import {
   projects,
   sections,
   skills,
+  withoutCode,
 } from "@/content/portfolio";
 
 const section = Object.fromEntries(sections.map((s) => [s.id, s]));
@@ -95,7 +96,7 @@ export default function Home() {
                     {job.bullets.map((line) => (
                       <li key={line} className="prose-ko flex gap-3 text-[1.0625rem]">
                         <span aria-hidden className="mark" />
-                        <span>{line}</span>
+                        <span>{withoutCode(line)}</span>
                       </li>
                     ))}
                   </ul>
@@ -167,7 +168,7 @@ export default function Home() {
                           {course.name}
                           <span>{course.ko}</span>
                         </h4>
-                        <p className="prose-ko mt-2 text-[1.0625rem]">{course.desc}</p>
+                        <p className="prose-ko mt-2 text-[1.0625rem]">{withoutCode(course.desc)}</p>
                         <p className="course-learned">{course.learned.join(", ")}</p>
                       </div>
                     ))}

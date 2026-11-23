@@ -5,6 +5,10 @@
  * 내용 기준: CV_Hyunjun.pdf (public/CV_Hyunjun.pdf 로도 배포됨)
  */
 
+/** 인쇄용 문서의 교차 참조 "(PRJ-01)"을 웹 화면에서 뺀다. */
+export const withoutCode = (text: string) =>
+  text.replace(/\s*\(PRJ-\d+\)/g, "");
+
 export const profile = {
   name: "안현준",
   nameEn: "Ahn Hyunjun",
