@@ -5,7 +5,7 @@
  * 내용 기준: CV_Hyunjun.pdf (public/CV_Hyunjun.pdf 로도 배포됨)
  */
 
-/** 인쇄용 문서의 교차 참조 "(PRJ-01)"을 웹 화면에서 뺀다. */
+/** 본문에 남은 교차 참조 "(PRJ-01)"을 사이트와 PDF에서 뺀다. */
 export const withoutCode = (text: string) =>
   text.replace(/\s*\(PRJ-\d+\)/g, "");
 
@@ -19,7 +19,7 @@ export const profile = {
   statement:
     "두 프로젝트에서 가장 크게 배운 것은 '모델이 좋아졌다'를 감이 아니라 숫자로 증명하는 법입니다.",
   intro:
-    "LLM 지식 증류로 F&B 트렌드를 조기 탐지하는 시스템과, XGBoost로 B2B 매장의 재구매 시점을 예측하는 시스템을 설계부터 운영까지 직접 만들었습니다. 두 시스템 모두 매일 무인으로 실행되며, 고정 평가셋·시간 순 검증·홀드아웃으로 모델이 정말 나아졌는지를 숫자로 확인합니다. C/C++·Linux 시스템 프로그래밍 기반 위에서, 모델을 실제 서비스로 연결하는 일에 집중하고 있습니다.",
+    "LLM 지식 증류로 F&B 트렌드를 조기 탐지하는 시스템과, XGBoost로 B2B 매장의 재구매 시점을 예측하는 시스템을 설계부터 운영까지 직접 만들었습니다. 두 시스템 모두 매일 무인으로 실행되며, 고정 평가셋·시간 순 검증·홀드아웃으로 모델이 정말 나아졌는지를 숫자로 확인합니다. 매장 운영 앱 만월체크에서는 결제, 장애 대응, QA, 리팩터링을 맡고 있습니다. C/C++·Linux 시스템 프로그래밍 기반 위에서, 모델을 실제 서비스로 연결하는 일에 집중하고 있습니다.",
   availability: [
     { label: "Location", value: "경기 수원" },
     { label: "Language", value: "한국어 / 영어 협업 가능" },
@@ -33,9 +33,10 @@ export const links: Link[] = [
   { label: "GitHub", href: "https://github.com/hyunahn1" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/hyunjun-ahn-35659b305/" },
   { label: "Blog", href: "https://velog.io/@hyunahn1" },
-  { label: "Resume PDF", href: "/CV_Hyunjun.pdf" },
-  // /print 페이지를 렌더한 결과물입니다. 내용을 고쳤다면 `npm run pdf` 로 다시 뽑으세요.
-  { label: "Portfolio PDF", href: "/portfolio-ahnhyunjun.pdf" },
+  // 아래 PDF는 /cv, /cv/ko, /print 를 렌더한 결과물입니다. 내용을 고쳤다면 `npm run pdf` 로 다시 뽑으세요.
+  { label: "국문 이력서", href: "/CV_Hyunjun_KR.pdf" },
+  { label: "영문 CV", href: "/CV_Hyunjun.pdf" },
+  { label: "포트폴리오 PDF", href: "/portfolio-ahnhyunjun.pdf" },
 ];
 
 export type SpecRow = { label: string; body: string[] };
@@ -635,6 +636,15 @@ export const projects: Project[] = [
 
 /* --- 42 과정에서 수행한 과제 ------------------------------------------- */
 
+const mainCodes = ["PRJ-05", "PRJ-01", "PRJ-03"];
+/** 사이트와 PDF에서 크게 보여줄 프로젝트. 나머지는 간단히 보여준다. */
+export const mainProjects = mainCodes.map(
+  (code) => projects.find((project) => project.code === code)!,
+);
+export const otherProjects = projects.filter(
+  (project) => !mainCodes.includes(project.code),
+);
+
 export type Course = {
   name: string;
   ko: string;
@@ -860,6 +870,17 @@ export const skills: { group: string; items: string[] }[] = [
       "Holdout / A/B",
     ],
   },
+  {
+    group: "App & Payments",
+    items: [
+      "Flutter",
+      "Dart",
+      "Firebase",
+      "Cloud Functions",
+      "Toss Payments / BrandPay",
+      "iOS / Android WebView",
+    ],
+  },
   { group: "Languages", items: ["Python", "C", "C++", "TypeScript", "Shell Script", "OCaml"] },
   {
     group: "Embedded",
@@ -928,7 +949,7 @@ export const sections = [
   { id: "contact", index: "08", title: "Contact", ko: "연락처" },
 ] as const;
 
-/* --- 영문 이력서 (/cv → public/CV_Hyunjun.pdf, `npm run pdf` 로 생성) ------ */
+/* --- 이력서 (/cv, /cv/ko → public/CV_Hyunjun*.pdf, `npm run pdf` 로 생성) --- */
 
 export type CvEntry = {
   title: string;
@@ -938,6 +959,15 @@ export type CvEntry = {
 };
 
 export const cv = {
+  lang: "en" as "en" | "ko",
+  labels: {
+    summary: "Summary",
+    experience: "Experience",
+    projects: "Projects",
+    skills: "Technical Skills",
+    education: "Education",
+    awards: "Awards",
+  },
   name: "Hyunjun Ahn",
   role: "AI / ML Engineer",
   contact: ["ahnhj99999@gmail.com", "+82 10-2553-3735", "Suwon, South Korea"],
@@ -952,7 +982,7 @@ export const cv = {
   ],
   photo: "/media/profile.jpg",
   summary:
-    "AI engineer who takes models from raw data to systems that run every day. I designed, trained, and operate two production AI systems end to end: an F&B trend radar built on a distilled 4B LLM that outperforms a 30B general model at zero external API cost, and a reorder forecasting service that drives in-app restock alerts. I treat evaluation as the core of the work — frozen eval sets, time-ordered validation, and holdouts so that every \"it got better\" is a number, not a feeling. My foundation is C/C++ and Linux systems programming from the 42 curriculum, which shapes how I approach serving, observability, and data quality.",
+    "AI engineer who takes models from raw data to systems that run every day. I designed, trained, and operate two production AI systems end to end: an F&B trend radar built on a distilled 4B LLM that outperforms a 30B general model at zero external API cost, and a reorder forecasting service that drives in-app restock alerts. I also own payments, incident response, QA, and refactoring for the Manwol Check app. I treat evaluation as the core of the work — frozen eval sets, time-ordered validation, and holdouts so that every \"it got better\" is a number, not a feeling. My foundation is C/C++ and Linux systems programming from the 42 curriculum, which shapes how I approach serving, observability, and data quality.",
   experience: [
     {
       title: "Manwol · AI Engineer",
@@ -976,14 +1006,34 @@ export const cv = {
   ] as CvEntry[],
   projects: [
     {
+      title: "Manwol Check — In-App Payments, Incident Response & QA · Manwol",
+      sub: "Flutter, Firebase Cloud Functions, Toss Payments, Toss BrandPay, iOS / Android WebView, Remote Config",
+      period: "Sep 2026 – Present",
+      bullets: [
+        "Moved checkout to live Toss payments and built BrandPay saved-card checkout, slide-to-pay, and Face ID / fingerprint payment on iOS and Android",
+        "Resolved production payment issues: missing deployment env vars, stale reward balances that auto-canceled orders, WebView SDK failures, and an App Store upload failure caused by SDK bitcode",
+        "Verified releases on real devices, fixed regressions from team feedback, rebuilt the home and recipe screens, and launched an owner community",
+      ],
+    },
+    {
       title: "Trend Radar — Early Detection of Emerging F&B Trends · Manwol",
       sub: "Python, Qwen3-4B, LoRA SFT, Knowledge Distillation, vLLM, scikit-learn, Prometheus, Grafana",
       period: "2026 – Present",
       bullets: [
-        "Built a daily pipeline that reads ~150K posts from 6 sources (Naver blog/café, Instagram, YouTube in ko/en/ja/zh, communities), extracts newly appearing food names with a local LLM, and tracks their search curves to flag trends before they go mainstream",
+        "Built a daily pipeline over ~150K collected posts from 6 sources (Naver blog/café, Instagram, YouTube in ko/en/ja/zh, communities), extracting newly appearing food names with a local LLM and tracking their search curves to flag trends before they go mainstream",
         "Distilled Qwen3-4B from teacher-model labels with rationales (Distilling Step-by-Step, LoRA SFT); the 7.5× smaller model beats a 30B general model on all 6 judgment attributes (food F1 0.905 → 0.947, café-fit F1 0.846 → 0.942) and lifts extraction F1 0.654 → 0.747",
         "Serves 4 vLLM containers on demand on an in-house GPU at zero external LLM API cost; captures 98% of names mentioned in 5+ posts and registered 27 of 28 real trends in the gold set",
         "Trend classifier on search-curve features reaches AUC 0.839 on a time-based holdout (growth-rate rule: 0.656); added source-span grounding, alias validation, and daily anomaly checks after tracing a 25× search-volume inflation to a bad alias",
+      ],
+    },
+    {
+      title: "Autobahn Truck Parking Availability Prediction · Applied Deep Learning",
+      sub: "Python, PyTorch, LightGBM, Kubernetes, TimescaleDB, Feast, Redis, Grafana, Flutter",
+      period: "2026 – Present",
+      bullets: [
+        "Collected and preprocessed ~160K Toll Collect SID records and analyzed spatiotemporal demand by rest area",
+        "Compared LightGBM and deep models against a seasonal baseline to verify when a model actually beats the baseline",
+        "Deployed the inference stack on Kubernetes with TimescaleDB, Feast, and Redis, monitored ingestion, MAE, and job status in Grafana, and built a Flutter navigation prototype that shows parking availability by route and arrival time",
       ],
     },
     {
@@ -994,7 +1044,6 @@ export const cv = {
         "Predicts per store × item reorder date and quantity so the app can push restock alerts and pre-filled carts; runs daily as a Cloud Run Job → Firestore → Cloud Functions pipeline",
         "XGBoost cut reorder-date MAE by 34% (8.44 → 5.56 days) under 12-fold monthly walk-forward validation with all features recomputed as of prediction time to prevent leakage",
         "Re-framed the target from date error to late-alert rate after error analysis; a ratchet correction cut repeat misses 2.5% → 1.0% across 22,311 reorders, and a 5% no-alert holdout guards against self-confirming evaluation",
-        "Built a cadence-type multi-agent router (TabPFN / quantile XGBoost) but kept the simpler model in production when the overall gain was under 0.4 pp — runtime 20s → 3.6s and PyTorch dropped from the image",
       ],
     },
     {
@@ -1002,26 +1051,7 @@ export const cv = {
       sub: "Flutter, Python, Firebase Functions, Firestore, FastAPI, PostgreSQL, Naver / Kakao APIs",
       period: "2026 – Present",
       bullets: [
-        "Solo-built and shipped an iOS / Android app that maps where trending desserts are sold; a daily collector across 17 provinces creates stores only from verified place results and confirms sales with 2+ matching posts, removing false positives from name guessing",
-        "Expanded to several dessert categories (up to 251 stores each) with crowd reports gated by 3+ distinct users and an admin review console",
-      ],
-    },
-    {
-      title: "Manwol Check — In-App Payments, Incident Response & QA · Manwol",
-      sub: "Flutter, Firebase Cloud Functions, Toss Payments, Toss BrandPay, iOS / Android WebView, Remote Config",
-      period: "2026 – Present",
-      bullets: [
-        "Moved checkout to live Toss payments and built BrandPay saved-card checkout, slide-to-pay, and Face ID / fingerprint payment on iOS and Android",
-        "Resolved production payment issues: missing deployment env vars, stale reward balances that auto-canceled orders, WebView SDK failures, and an App Store rejection caused by SDK bitcode",
-        "Verified releases on real devices, fixed regressions from team feedback, rebuilt the home and recipe screens, and launched an owner community",
-      ],
-    },
-    {
-      title: "Autobahn Truck Parking Availability Prediction · Applied Deep Learning",
-      sub: "Python, PyTorch, LightGBM, Kubernetes, TimescaleDB, Feast, Redis, Grafana, Flutter",
-      period: "2026 – Present",
-      bullets: [
-        "Forecasting rest-area parking availability from ~160K Toll Collect SID records (LightGBM and deep models vs. a seasonal baseline), served on Kubernetes with TimescaleDB, Feast, Redis, and Grafana MAE monitoring",
+        "Solo-built and shipped an iOS / Android app that maps where trending desserts are sold; a daily collector across 17 provinces creates stores only from verified place results and confirms sales with 2+ matching posts",
       ],
     },
     {
@@ -1044,6 +1074,7 @@ export const cv = {
       items:
         "Walk-forward validation, holdout / A/B design, Prometheus, Grafana, BigQuery, Cloud Run, Firestore, Feast, TimescaleDB, Redis, Docker, Kubernetes",
     },
+    { group: "App & Payments", items: "Flutter, Dart, Firebase, Cloud Functions, Toss Payments / BrandPay, iOS / Android WebView" },
     { group: "Languages", items: "Python, C, C++, TypeScript, Shell Script, OCaml" },
     { group: "Systems", items: "Linux, Yocto / BitBake, Xen Hypervisor, CAN Bus, Qt / QML, Argo CD, NGINX" },
   ],
@@ -1083,4 +1114,143 @@ export const cv = {
       ],
     },
   ] as CvEntry[],
+};
+
+export type Cv = typeof cv;
+
+export const cvKo: Cv = {
+  lang: "ko",
+  labels: {
+    summary: "자기소개",
+    experience: "경력",
+    projects: "프로젝트",
+    skills: "기술",
+    education: "학력",
+    awards: "수상",
+  },
+  name: "안현준",
+  role: "AI / ML 엔지니어",
+  contact: ["ahnhj99999@gmail.com", "010-2553-3735", "경기 수원"],
+  links: cv.links,
+  photo: cv.photo,
+  summary:
+    "데이터 수집부터 모델 학습, 서빙, 운영까지 직접 맡는 AI 엔지니어입니다. 만월회에서 4B LLM을 증류해 30B 범용 모델보다 정확하게 F&B 유행을 찾는 트렌드 레이더와, 매장별 재구매 시점을 예측해 앱 알림으로 잇는 시스템을 설계하고 운영합니다. 매장 운영 앱 만월체크에서는 결제, 장애 대응, QA, 리팩터링을 맡고 있습니다. 평가셋을 먼저 고정하고 시간 순으로 검증해 모델이 나아졌는지를 숫자로 확인합니다. 42에서 쌓은 C/C++·Linux 시스템 프로그래밍 경험이 서빙과 관측, 데이터 품질을 보는 기준이 됩니다.",
+  experience: [
+    {
+      title: "만월회 · AI 엔지니어",
+      sub: "카페·베이커리 대상 B2B 식자재 이커머스 · 경기 수원",
+      period: "2026.09 – 현재",
+      bullets: [
+        "사내 AI 시스템의 데이터 수집, 모델 학습, 서빙, 대시보드, 일일 운영 담당",
+        "트렌드 레이더와 재구매 예측 시스템을 출시해 매일 무인으로 운영",
+        "매장 운영 앱 만월체크의 결제, 장애 대응, QA, 리팩터링 담당",
+        "유행 디저트 판매처 지도 앱 디저트맵을 1인 개발해 App Store·Google Play 출시",
+      ],
+    },
+    {
+      title: "삼성현역사문화관 · 연구원",
+      sub: "경북 경산",
+      period: "2025.03 – 2025.12",
+      bullets: ["유물 데이터셋 관리·분석, 역사 기록과 전시 자료 컬렉션 데이터베이스 구축 및 유지보수"],
+    },
+  ],
+  projects: [
+    {
+      title: "만월체크 — 앱 결제 · 장애 대응 · QA · 리팩터링 · 만월회",
+      sub: "Flutter, Firebase Cloud Functions, Toss Payments, Toss BrandPay, iOS / Android WebView, Remote Config",
+      period: "2026.09 – 현재",
+      bullets: [
+        "토스 라이브 결제와 브랜드페이를 연결하고 저장 카드 바로결제, 밀어서 결제, Android 지문·iOS Face ID 결제 구현",
+        "배포 환경변수 누락, 적립금 지연 반영으로 인한 주문 자동 취소, 웹뷰 SDK 오류, SDK bitcode로 막힌 App Store 업로드 등 운영 장애의 원인을 찾아 해결",
+        "실기기 QA와 팀 피드백으로 회귀 버그를 고치고, 홈·레시피 화면 개편과 사장님 커뮤니티 신설",
+      ],
+    },
+    {
+      title: "트렌드 레이더 — F&B 신규 트렌드 조기 탐지 · 만월회",
+      sub: "Python, Qwen3-4B, LoRA SFT, Knowledge Distillation, vLLM, scikit-learn, Prometheus, Grafana",
+      period: "2026 – 현재",
+      bullets: [
+        "네이버 블로그·카페, Instagram, YouTube(한·영·일·중), 커뮤니티 등 6개 소스의 글 약 15만 건을 다루는 일일 파이프라인을 구축하고, 로컬 LLM으로 새 음식 이름을 뽑아 검색 곡선으로 유행 조짐 탐지",
+        "교사 모델의 라벨과 판단 이유로 Qwen3-4B를 증류(Distilling Step-by-Step, LoRA SFT). 7.5배 작은 모델이 30B 범용 모델을 판정 6개 속성 모두에서 앞섬(음식 F1 0.905 → 0.947, 카페 적합 F1 0.846 → 0.942), 추출 F1 0.654 → 0.747",
+        "사내 GPU에서 vLLM 컨테이너 4종을 필요할 때만 띄워 외부 LLM API 비용 0원으로 운영. 5건 이상 언급된 이름의 98%를 포착하고 정답셋의 실제 유행 28개 중 27개 등록",
+        "검색 곡선 특징 기반 분류기로 시간 기준 홀드아웃 AUC 0.839 달성(성장률 규칙 0.656). 잘못된 별칭으로 검색량이 25배 부풀려진 문제를 추적한 뒤 출처 근거 확인, 별칭 검증, 일일 이상 탐지 추가",
+      ],
+    },
+    {
+      title: "아우토반 트럭 주차공간 예측 · Applied Deep Learning",
+      sub: "Python, PyTorch, LightGBM, Kubernetes, TimescaleDB, Feast, Redis, Grafana, Flutter",
+      period: "2026 – 현재",
+      bullets: [
+        "독일 Toll Collect SID 통행 데이터 약 16만 건을 수집·전처리하고 휴게소별 시공간 수요 패턴 분석",
+        "LightGBM과 딥러닝 모델을 계절성 기준값과 비교해 어떤 조건에서 모델이 실제로 나은지 검증",
+        "TimescaleDB, Feast, Redis를 연동한 추론 스택을 Kubernetes에 배포하고 Grafana로 인제스션·MAE·잡 상태를 모니터링. 경로와 도착 시간별 주차 가능성을 안내하는 Flutter 내비게이션 프로토타입 구현",
+      ],
+    },
+    {
+      title: "재구매 시점 예측 · 만월회",
+      sub: "Python, XGBoost, TabPFN, Pandas, BigQuery, Cloud Run Jobs, Firestore, Cloud Functions, Grafana",
+      period: "2026 – 현재",
+      bullets: [
+        "매장×품목별 재구매 시점과 수량을 예측해 앱 알림과 장바구니 제안으로 연결. Cloud Run Job → Firestore → Cloud Functions로 매일 실행",
+        "월별 12구간 워크포워드 검증에서 XGBoost로 재구매 시점 MAE 34% 개선(8.44 → 5.56일). 모든 피처를 예측 시점 기준으로 다시 계산해 데이터 누수 차단",
+        "오차 분석 뒤 목표를 날짜 오차에서 늦은 알림 비율로 전환. 래칫 보정으로 재구매 22,311건의 반복 누락을 2.5% → 1.0%로 줄이고, 5% 무알림 홀드아웃으로 자기확증 방지",
+      ],
+    },
+    {
+      title: "디저트맵 — 유행 디저트 판매처 지도 앱 · 만월회",
+      sub: "Flutter, Python, Firebase Functions, Firestore, FastAPI, PostgreSQL, Naver / Kakao APIs",
+      period: "2026 – 현재",
+      bullets: [
+        "iOS·Android 앱을 1인 개발해 출시. 전국 17개 시·도를 매일 수집하고, 검증된 장소 결과로만 매장을 만들며 일치하는 글이 2건 이상일 때 판매처로 확정",
+      ],
+    },
+    {
+      title: "통합 디지털 콕핏 · SEA:ME Capstone",
+      sub: "Xen Hypervisor, Yocto / BitBake, Raspberry Pi 4, Qt / QML, CAN Bus",
+      period: "2026",
+      bullets: [
+        "Raspberry Pi 4에서 Xen Dom0 / DomU로 도메인을 나누고 디지털 클러스터, Qt 헤드 유닛, 초음파 주차 보조를 커스텀 Yocto 이미지로 통합해 RC카에서 검증",
+      ],
+    },
+  ],
+  skills: [
+    {
+      group: "AI / ML",
+      items:
+        "LLM 파인튜닝(LoRA SFT), 지식 증류, vLLM, PyTorch, XGBoost, LightGBM, TabPFN, scikit-learn, Pandas, NumPy, 시계열 예측",
+    },
+    {
+      group: "MLOps·데이터",
+      items:
+        "워크포워드 검증, 홀드아웃 / A/B 설계, Prometheus, Grafana, BigQuery, Cloud Run, Firestore, Feast, TimescaleDB, Redis, Docker, Kubernetes",
+    },
+    {
+      group: "앱·결제",
+      items: "Flutter, Dart, Firebase, Cloud Functions, Toss Payments / BrandPay, iOS / Android WebView",
+    },
+    { group: "언어", items: "Python, C, C++, TypeScript, Shell Script, OCaml" },
+    { group: "시스템", items: "Linux, Yocto / BitBake, Xen Hypervisor, CAN Bus, Qt / QML, Argo CD, NGINX" },
+  ],
+  education: [
+    { title: "한국방송통신대학교 PRIME College", sub: "인공지능 전공 (B.S.)", period: "2026.03 – 현재" },
+    { title: "42 Wolfsburg – SEA:ME", sub: "Automotive Embedded AI · 폭스바겐코리아 후원", period: "2026.01 – 현재" },
+    { title: "42 Gyeongsan Common Core", sub: "C, C++, Unix, 알고리즘, 시스템 프로그래밍", period: "2024.01 – 2026.01" },
+    { title: "영남대학교", sub: "역사학 전공 (B.A.)", period: "2018.03 – 2024.02" },
+  ],
+  awards: [
+    {
+      title: "Rising Star Award · 2025 Hackathon by 42 in Asia",
+      sub: "CDG · 42 Gyeongsan",
+      period: "2025.11",
+      bullets: [
+        "다국어 행정 문서를 처리하는 IDP 파이프라인 개발: PaddleOCR-VL(OCR), XLM-RoBERTa(분류), Ollama(요약), Docker 컨테이너화",
+      ],
+    },
+    {
+      title: "대상 · ESG 리빙랩 매칭 해커톤",
+      sub: "교육부",
+      period: "2024.12",
+      bullets: ["광고대행사 ‘텀즈원’과 협업한 팀을 이끌며 컨셉부터 최종 발표까지 주도하고, ESG 중심 사내 소프트웨어 구조 설계"],
+    },
+  ],
 };

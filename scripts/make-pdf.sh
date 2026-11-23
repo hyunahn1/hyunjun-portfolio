@@ -57,4 +57,15 @@ done
   "http://localhost:$PORT/cv"
 cp public/CV_Hyunjun.pdf CV_Hyunjun.pdf
 
-echo "생성됨: $OUT, public/CV_Hyunjun.pdf"
+# 국문 이력서 (app/cv/ko/page.tsx)
+"$CHROME" \
+  --headless \
+  --disable-gpu \
+  --no-pdf-header-footer \
+  --run-all-compositor-stages-before-draw \
+  --virtual-time-budget=20000 \
+  --print-to-pdf="public/CV_Hyunjun_KR.pdf" \
+  "http://localhost:$PORT/cv/ko"
+cp public/CV_Hyunjun_KR.pdf CV_Hyunjun_KR.pdf
+
+echo "생성됨: $OUT, public/CV_Hyunjun.pdf, public/CV_Hyunjun_KR.pdf"

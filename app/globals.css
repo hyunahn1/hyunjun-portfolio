@@ -12,7 +12,6 @@
     "Apple SD Gothic Neo", sans-serif;
   --font-display: var(--font-paperlogy), var(--font-suit), "Apple SD Gothic Neo",
     sans-serif;
-  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
 }
 
 :root {
@@ -46,16 +45,6 @@ body {
 }
 
 /* --- 타이포 유틸 ------------------------------------------------------- */
-
-/* 인쇄용 문서(/print, /cv) 전용 라벨 */
-.label {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-}
 
 .display {
   font-family: var(--font-display);
@@ -1394,6 +1383,22 @@ html.intro-lock body {
   margin: 13mm 12mm 12mm;
 }
 
+/* 이력서와 포트폴리오 문서는 화면에서도 항상 흰 종이로 보인다. */
+.doc {
+  --color-paper: #fff;
+  --color-panel: #f2f4f7;
+  --color-ink: #0a0c10;
+  --color-muted: #4a5360;
+  --color-line: #dde1e7;
+  --color-signal: #e14220;
+  background: #fff;
+  color: var(--color-ink);
+}
+
+body:has(.doc) {
+  background: #fff;
+}
+
 .doc .avoid-break {
   break-inside: avoid;
 }
@@ -1405,12 +1410,6 @@ html.intro-lock body {
 @media print {
   :root {
     color-scheme: light;
-    --color-paper: #fff;
-    --color-panel: #f2f4f7;
-    --color-ink: #0a0c10;
-    --color-muted: #5a6472;
-    --color-line: #dde1e7;
-    --color-signal: #e14220;
   }
 
   html {

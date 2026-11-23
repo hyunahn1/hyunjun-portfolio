@@ -1,15 +1,6 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-
-const plexMono = IBM_Plex_Mono({
-  variable: "--font-plex-mono",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  // 인쇄용 문서(/print, /cv)에서만 쓴다.
-  preload: false,
-});
 
 const suit = localFont({
   src: "./fonts/SUIT-Variable.woff2",
@@ -43,7 +34,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ko" className={`${suit.variable} ${paperlogy.variable} ${plexMono.variable} h-full antialiased`}>
+    <html lang="ko" className={`${suit.variable} ${paperlogy.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

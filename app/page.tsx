@@ -16,23 +16,15 @@ import {
   education,
   experience,
   links,
+  mainProjects,
+  otherProjects,
   profile,
-  projects,
   sections,
   skills,
   withoutCode,
 } from "@/content/portfolio";
 
 const section = Object.fromEntries(sections.map((s) => [s.id, s]));
-
-// 메인으로 크게 보여줄 프로젝트. 나머지는 접힌 목록으로 내려간다.
-const mainCodes = ["PRJ-05", "PRJ-01", "PRJ-03"];
-const mainProjects = mainCodes.map(
-  (code) => projects.find((project) => project.code === code)!,
-);
-const otherProjects = projects.filter(
-  (project) => !mainCodes.includes(project.code),
-);
 
 export default function Home() {
   return (
