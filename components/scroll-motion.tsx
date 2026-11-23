@@ -18,9 +18,35 @@ export function ScrollMotion() {
 
     root.classList.add("motion-enabled");
 
+    // 화면 가운데를 지나는 단계에 맞춰 케이스 스터디의 고정 화면을 바꾼다.
+    const stepObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const step = entry.target as HTMLElement;
+          step
+            .closest("[data-case]")
+            ?.querySelectorAll<HTMLElement>("[data-panel]")
+            .forEach((panel) =>
+              panel.classList.toggle(
+                "is-active",
+                panel.dataset.panel === step.dataset.shot,
+              ),
+            );
+        });
+      },
+      { rootMargin: "-45% 0px -45% 0px" },
+    );
+    document
+      .querySelectorAll("[data-shot]")
+      .forEach((step) => stepObserver.observe(step));
+
     if (reducedMotion) {
       targets.forEach((target) => target.classList.add("is-in-view"));
-      return () => root.classList.remove("motion-enabled");
+      return () => {
+        stepObserver.disconnect();
+        root.classList.remove("motion-enabled");
+      };
     }
 
     const observer = new IntersectionObserver(
@@ -40,9 +66,14 @@ export function ScrollMotion() {
     ).map((el) => ({ el, current: -1 }));
 
     let raf = 0;
-    const frame = () => {
+    let lastFrame = 0;
+    const frame = (now = performance.now()) => {
       raf = 0;
       let moving = false;
+      // 프레임이 떨어져도 같은 시간에 같은 거리를 따라가게 한다.
+      const elapsed = lastFrame ? Math.min(now - lastFrame, 100) : 16;
+      const follow = 1 - Math.exp(-elapsed / 90);
+      lastFrame = now;
 
       pins.forEach((pin) => {
         const rect = pin.el.getBoundingClientRect();
@@ -51,7 +82,9 @@ export function ScrollMotion() {
           range > 0 ? Math.min(1, Math.max(0, -rect.top / range)) : 1;
         // 휠 한 칸이 툭 끊기지 않도록 목표값을 따라가며 감속한다.
         const next =
-          pin.current < 0 ? target : pin.current + (target - pin.current) * 0.16;
+          pin.current < 0
+            ? target
+            : pin.current + (target - pin.current) * follow;
         pin.current = Math.abs(target - next) < 0.0005 ? target : next;
         if (pin.current !== target) moving = true;
         pin.el.style.setProperty("--p", pin.current.toFixed(4));
@@ -69,6 +102,7 @@ export function ScrollMotion() {
       });
 
       if (moving) raf = requestAnimationFrame(frame);
+      else lastFrame = 0;
     };
 
     const onScroll = () => {
@@ -76,10 +110,12 @@ export function ScrollMotion() {
     };
 
     frame();
+    lastFrame = 0;
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
 
     return () => {
+      stepObserver.disconnect();
       observer.disconnect();
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);

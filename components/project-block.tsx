@@ -2,7 +2,7 @@ import { MediaGallery } from "@/components/media-gallery";
 import { withoutCode, type Project } from "@/content/portfolio";
 
 // content 의 영문 키는 인쇄용 문서와 공유하므로 화면에서만 한글로 보여준다.
-const SPEC_LABEL: Record<string, string> = {
+export const SPEC_LABEL: Record<string, string> = {
   Problem: "문제",
   "My Role": "맡은 일",
   Challenge: "어려웠던 점",

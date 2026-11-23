@@ -33,6 +33,7 @@ export function HeroScene() {
     let width = 0;
     let height = 0;
     let raf = 0;
+    let visible = true;
 
     const makePoints = () => {
       const count = width < 720 ? 28 : 52;
@@ -114,7 +115,7 @@ export function HeroScene() {
         }
       });
 
-      if (!reducedMotion) raf = requestAnimationFrame(draw);
+      raf = !reducedMotion && visible ? requestAnimationFrame(draw) : 0;
     };
 
     const onPointerMove = (event: PointerEvent) => {
@@ -129,6 +130,12 @@ export function HeroScene() {
 
     const observer = new ResizeObserver(resize);
     observer.observe(canvas);
+    // 첫 화면을 지나면 그리기를 멈춰 스크롤 장면에 프레임을 넘긴다.
+    const visibility = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible && !reducedMotion && !raf) raf = requestAnimationFrame(draw);
+    });
+    visibility.observe(canvas);
     window.addEventListener("pointermove", onPointerMove, { passive: true });
     document.documentElement.addEventListener("mouseleave", onPointerLeave);
     resize();
@@ -137,6 +144,7 @@ export function HeroScene() {
     return () => {
       cancelAnimationFrame(raf);
       observer.disconnect();
+      visibility.disconnect();
       window.removeEventListener("pointermove", onPointerMove);
       document.documentElement.removeEventListener("mouseleave", onPointerLeave);
     };

@@ -1,47 +1,50 @@
 import Image from "next/image";
+import { CaseStudy } from "@/components/case-study";
 import type { Project } from "@/content/portfolio";
 
 export function FeaturedWork({ projects }: { projects: Project[] }) {
-  const featured = [projects[0], projects[1], projects[3]];
-
   return (
-    <section className="featured-work" aria-labelledby="featured-title">
+    <section
+      id="projects"
+      className="featured-work"
+      aria-labelledby="featured-title"
+    >
       <div className="featured-heading" data-reveal="heading">
-        <h2 id="featured-title">데이터에서 운영까지.</h2>
+        <h2 id="featured-title">대표 프로젝트 세 가지.</h2>
         <p>
-          모델 성능표에 멈추지 않고, 실제 사용자가 만나는 서비스까지 연결한
-          작업입니다.
+          앱 결제와 장애 대응, 트렌드 예측 AI, 아우토반 주차 예측까지 제가
+          중심이 되어 만든 일입니다.
         </p>
       </div>
 
-      {featured.map((project) => {
+      {projects.map((project) => {
         const image = project.media[0];
         const outcome = project.spec.find((row) => row.label === "Result")
           ?.body[0];
 
         return (
-          <div key={project.code} className="work-pin" data-pin>
-            <a
-              href={`#project-${project.code.toLowerCase()}`}
-              className="work-stage"
-            >
-              <div className="work-media">
-                {image && image.type === "image" && (
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    sizes="100vw"
-                    className="work-image"
-                  />
-                )}
+          <article key={project.code} id={`project-${project.code.toLowerCase()}`}>
+            <div className="work-pin" data-pin>
+              <div className="work-stage">
+                <div className="work-media">
+                  {image && image.type === "image" && (
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      sizes="100vw"
+                      className="work-image"
+                    />
+                  )}
+                </div>
+                <div className="work-copy">
+                  <h3>{project.title}</h3>
+                  {outcome && <p>{outcome}</p>}
+                </div>
               </div>
-              <div className="work-copy">
-                <h3>{project.title}</h3>
-                {outcome && <p>{outcome}</p>}
-              </div>
-            </a>
-          </div>
+            </div>
+            <CaseStudy project={project} />
+          </article>
         );
       })}
     </section>

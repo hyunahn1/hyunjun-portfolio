@@ -54,6 +54,8 @@ export type Media = {
 };
 
 export type Project = {
+  /** 케이스 스터디에서 spec 줄마다 띄울 화면. 숫자는 media 순서, "pay"는 결제 체험. */
+  stage?: (number | "pay")[];
   code: string;
   org: string;
   title: string;
@@ -286,6 +288,7 @@ export const projects: Project[] = [
       "Grafana",
       "Flutter",
     ],
+    stage: [0, 0, 0, 1],
     media: [
       {
         type: "image",
@@ -383,48 +386,62 @@ export const projects: Project[] = [
   {
     code: "PRJ-05",
     org: "만월회 · 모바일 앱 · 2026.09 — 현재",
-    title: "만월체크 — 식자재몰 · 레시피 · 사장님 커뮤니티",
-    titleEn: "Manwol Check — In-app B2B Grocery Mall, Recipes & Owner Community",
+    title: "만월체크 — 앱 결제 · 장애 대응 · QA · 리팩터링",
+    titleEn: "Manwol Check — In-App Payments, Incident Response, QA & Refactoring",
     overview:
-      "카페 사장님과 직원이 매뉴얼·근태·급여·레시피·재고를 함께 관리하는 매장 운영 앱입니다. 앱 안의 식자재 주문몰(만월상회)과 레시피 기능을 맡아, 레시피에서 재료를 바로 사고 재고가 떨어질 때쯤 장바구니가 미리 채워지는 흐름을 만들었습니다. 사장님 커뮤니티를 새로 만들고 기존 화면들을 리팩터링해 UI/UX를 다듬었습니다.",
+      "카페 사장님과 직원이 매뉴얼·근태·레시피·재고를 관리하고 식자재까지 주문하는 매장 운영 앱입니다. 입사 후 앱의 결제, 장애 대응, QA, 리팩터링을 맡아 라이브 결제 전환부터 생체인증 결제까지 붙이고, 실주문에서 나온 문제를 원인까지 찾아 고쳤습니다.",
     spec: [
       {
         label: "Problem",
         body: [
-          "만월회의 실제 쇼핑몰은 외부 쇼핑몰 빌더(아임웹)에 있고, 이 서비스는 주문 생성 API를 제공하지 않습니다. 앱에서 결제·배송·환불·적립금까지 끝나는 B2B 주문 경험을 만들면서도, 상품·회원·적립금의 원본은 그대로 아임웹에 두어야 했습니다.",
+          "앱 주문은 결제할 때마다 결제 위젯을 거쳐야 했고, 실제 주문이 시작되면서 적립금·환불·기기별 웹뷰에서 문제가 드러났습니다. 운영 중인 앱의 화면을 리팩터링하면서 결제와 기존 기능이 깨지지 않게 확인해야 했습니다.",
         ],
       },
       {
-        label: "식자재몰",
+        label: "결제",
         body: [
-          "아임웹 상품·회원·주문을 Cloud Functions로 주기 동기화(Firestore · Cloud SQL)하고, 앱 주문은 자체 장부(PostgreSQL)에 기록해 만월시스템 출고 흐름에 연결",
-          "토스페이먼츠 결제, 저장 카드로 비밀번호만 입력하는 바로결제, '밀어서 결제' 인터랙션",
-          "배송비를 상품별 배송 템플릿·등급 무료배송·도서산간·면세 배분까지 아임웹과 같은 규칙으로 계산",
-          "출고 전 셀프 즉시취소 / 출고 후 반품·환불 요청 분기, 환불 계좌 암호화 저장, 적립금 실시간 반영",
-          "상품명 키워드 분류를 아임웹 카테고리 트리로 바꿔 오분류 155개 정리, 회원 등급 전용 카테고리 노출",
-          "재구매 예측(PRJ-02)이 알림을 보내는 시각에 스마트 장바구니를 자동으로 채우고, 알림 열기·자동 담기·그대로 결제 이벤트를 기록",
+          "토스 라이브 결제와 브랜드페이를 앱에 연결하고, 테스트 주문과 운영 주문의 결제 키를 주문별로 분리",
+          "저장 카드는 결제 위젯 없이 비밀번호만 입력하는 「만월페이」 바로결제 구현",
+          "'밀어서 결제' 인터랙션, 결제수단 변경, 앱 설정의 만월페이 관리 화면 개발",
+          "토스 인증 SDK와 네이티브 웹뷰를 연결해 Android 지문·iOS Face ID 결제 구현",
+          "제주·도서산간 배송비, 면세 배분, 구매 수량 제한, 샘플 적립을 주문 서버에 반영",
+          "가상계좌 환불의 계좌 입력, 관리자 확인, 환불 상태 표시 흐름 정리",
         ],
       },
       {
-        label: "레시피",
+        label: "장애 대응",
         body: [
-          "레시피 상세의 '재료 구매하기' — 레시피 재료를 식자재몰 상품과 연결해, 옵션·수량을 골라 바로 담는 시트",
-          "'약 N번 만들 수 있어요' — 상품명의 묶음 표기(60g×10개, 1kg 3개, 18개입)를 해석하고 g↔ml를 맞춰 한 번 구매로 몇 잔을 만들 수 있는지 계산",
-          "내 레시피 / 추천 레시피 탭, 분류 줄, 초성 검색, 폴더 관리로 레시피 탭 재설계, 본사 추천 레시피 푸시 배포",
+          "적립금 주문 결제 불가: 배포에서 빠진 환경변수를 찾아 Cloud Functions를 다시 배포해 복구",
+          "주문 자동 취소: 웹에서 쓴 적립금이 앱에 늦게 반영돼 잔액 부족으로 취소되던 문제를 원천 잔액 실시간 조회로 해결",
+          "생체인증 결제 오류: 진단 빌드로 iOS 웹뷰 첫 문서 문제와 v2 SDK의 생체인증 브리지 부재를 찾아, 빈 페이지 선로딩과 v1 SDK 전환으로 해결",
+          "App Store 업로드 409: 토스 SDK에 남은 bitcode를 원인으로 찾아 제거",
+          "결제창 뒤로가기 검은 화면, 콜드스타트 로그인 풀림, iOS 27 실행 크래시 수정",
         ],
       },
       {
-        label: "커뮤니티",
+        label: "QA",
         body: [
-          "사장님 전용 커뮤니티: 채널, 글·댓글·답글, 저장, 검색, DM, 프로필, 지역 필터, 주간 인기 글, 공유 링크",
-          "사업자 인증 표시, 규정 동의, 신고·차단과 운영 대시보드(신고 처리·정지), Remote Config로 출시 빌드에서 켜고 끄기",
+          "생체인증 결제 출시 전 Android·iPhone 실기기로 등록과 결제 흐름 확인",
+          "결제 중 만월페이 관리를 열면 인증 콜백이 403으로 실패하던 문제를 세션 분리로 수정하고 재현 테스트 추가",
+          "적립 이력이 없는 회원과 소수 잔액에서 적립금 갱신이 실패하던 문제 수정",
+          "마지막 매뉴얼·폴더를 지워도 다시 살아나던 문제, 큰 글씨 Android에서 저장 버튼이 잘리던 문제 수정",
+          "레시피 첫 폴더를 만들면 기존 분류 폴더가 사라지던 운영 버그 수정",
+          "팀 피드백을 재고·레시피·근태·홈·식자재 전반에 반영 (반복 일정 종료일 하루 밀림, 급여명세서 PDF 최신값 등)",
         ],
       },
       {
-        label: "UI/UX",
+        label: "리팩터링·신규 기능",
         body: [
-          "홈을 Figma 새 디자인으로 교체하고 기존 화면을 SEED 디자인 시스템 기준으로 리팩터링",
-          "첫 로딩 스켈레톤, iOS 기본 전환, 상품 사진 Hero 전환, 태블릿 폭 대응",
+          "홈을 Figma 새 디자인으로 교체하고 레시피 탭을 내 레시피·추천 레시피, 분류, 초성 검색 구조로 재설계",
+          "식자재몰 상품 분류를 아임웹 카테고리 트리로 바꿔 오분류 155개 정리",
+          "첫 로딩 스켈레톤, iOS 기본 전환, 상품 사진 Hero 전환 적용",
+          "사장님 커뮤니티 신설: 채널, 글·댓글, DM, 검색, 신고·차단과 운영 대시보드",
+        ],
+      },
+      {
+        label: "Result",
+        body: [
+          "라이브 결제부터 생체인증 결제까지 Android·iOS에 출시하고, 실주문에서 나온 결제 장애를 원인까지 찾아 해결했습니다.",
         ],
       },
     ],
@@ -433,12 +450,14 @@ export const projects: Project[] = [
       "Dart",
       "Firebase",
       "Cloud Functions",
-      "Cloud SQL (PostgreSQL)",
-      "Firestore",
       "Toss Payments",
+      "Toss BrandPay",
+      "WKWebView",
+      "Android WebView",
       "Remote Config",
       "Figma",
     ],
+    stage: [0, "pay", "pay", 3, 1, 2],
     media: [
       {
         type: "image",
@@ -740,7 +759,7 @@ export const experience: Experience[] = [
       "LLM 지식 증류 기반 F&B 트렌드 조기 탐지 시스템 설계·운영 — 사내 GPU 서버에서 매일 무인 실행 (PRJ-01)",
       "XGBoost 기반 매장별 재구매 시점 예측 배치를 Cloud Run에 배포해 앱 알림·장바구니 제안과 연동 (PRJ-02)",
       "디저트 판매처 지도 앱 「디저트맵」을 1인 개발해 App Store·Google Play 출시 (PRJ-04)",
-      "매장 운영 앱 「만월체크」의 식자재몰(결제·배송·환불)·레시피(재료 구매 연결) 개발, 사장님 커뮤니티 신설과 기존 화면 UI/UX 리팩터링 담당 (PRJ-05)",
+      "매장 운영 앱 「만월체크」의 결제, 장애 대응, QA, 리팩터링 담당: 토스 라이브 결제·브랜드페이·생체인증 결제 구현, 실주문 결제 장애 해결 (PRJ-05)",
     ],
   },
   {
@@ -943,7 +962,7 @@ export const cv = {
         "Own the company's in-house AI systems from data collection and model training to serving, dashboards, and daily operation",
         "Shipped two production AI systems (Trend Radar, Reorder Forecasting — see Projects), both running unattended every day",
         "Built and launched Dessert Map, a Flutter map app for trending desserts, on the App Store and Google Play as a solo developer",
-        "Built the in-app grocery mall and recipe features of the Manwol Check store-operations app, launched its owner community, and led UI/UX refactoring",
+        "Owned in-app payments, incident response, QA, and refactoring for the Manwol Check store-operations app",
       ],
     },
     {
@@ -988,13 +1007,13 @@ export const cv = {
       ],
     },
     {
-      title: "Manwol Check — In-app B2B Grocery Mall, Recipes & Community · Manwol",
-      sub: "Flutter, Firebase Cloud Functions, Cloud SQL (PostgreSQL), Firestore, Toss Payments, Remote Config",
+      title: "Manwol Check — In-App Payments, Incident Response & QA · Manwol",
+      sub: "Flutter, Firebase Cloud Functions, Toss Payments, Toss BrandPay, iOS / Android WebView, Remote Config",
       period: "2026 – Present",
       bullets: [
-        "Built in-app B2B ordering on top of an external store builder with no order-creation API: synced products / members via Cloud Functions, kept app orders in a PostgreSQL ledger feeding fulfillment, and implemented Toss payments, saved-card one-tap checkout, shipping-fee rules, self-cancel vs. return flows, and encrypted refund accounts",
-        "Linked recipes to the mall — \"buy ingredients\" sheet and a \"makes about N servings\" estimate parsed from pack sizes (60g×10, 1kg ×3) with g↔ml conversion — and auto-filled smart carts at the reorder model's alert time",
-        "Launched an owner community (channels, search, DMs, reporting / blocking, moderation dashboard) and refactored screens onto the SEED design system",
+        "Moved checkout to live Toss payments and built BrandPay saved-card checkout, slide-to-pay, and Face ID / fingerprint payment on iOS and Android",
+        "Resolved production payment issues: missing deployment env vars, stale reward balances that auto-canceled orders, WebView SDK failures, and an App Store rejection caused by SDK bitcode",
+        "Verified releases on real devices, fixed regressions from team feedback, rebuilt the home and recipe screens, and launched an owner community",
       ],
     },
     {
